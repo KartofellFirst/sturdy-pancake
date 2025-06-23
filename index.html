@@ -7,9 +7,9 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
   </head>
   <body>
-    <main>
-        <h1>Welcome to My Website</h1>  
-    </main>
+      <h1>Welcome to My Website</h1>  
+      <input onchange="if(confirm('отправить на сервер?')) Post('/add', this.value); update()">
+      <h4 id="text"> </h4>
     <script>
 async function Post(url, data) {
   try {
@@ -34,7 +34,14 @@ async function Post(url, data) {
   }
 }
 
-
+function update() {
+  const mt = document.querySelector("#text")
+  mt.textContent = ""
+  Post('/load', null)
+  .then {data => data.forEach(el => {mt.textContent += el + ", "})}
+  .catch {error => mt.textContent = "error: " + error}
+}
+update();
     </script>
   </body>
 </html>
