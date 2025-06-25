@@ -16,7 +16,7 @@
 function update() {
   const mt = document.querySelector("#text")
   mt.textContent = ""
-  Post('/messages', null)
+  Get('/messages')
   .then (data => data.forEach(el => {mt.textContent += el + ", "}))
   .catch (error => mt.textContent = "error: " + error)
 }
