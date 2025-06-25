@@ -76,13 +76,13 @@
   <body>
       <center><h1>Hello, put your message here:</h1></center>
       <form class="vertical-block" style="margin: 10px;min-width: 50px;">
-        <div class="message-input no-sign">
-          <div class="resizable-wrapper">
+        <div class="message-input no-sign" onclick="document.querySelector('#name-input').focus()">
+          <div class="resizable-wrapper" onclick="event.stopPropogation();">
             <textarea id="message-area" style="width: 300px;max-width: 97vw;" name="message-text"></textarea>
             <div class="resizer"></div>
           </div>
 
-          <div class="horizontal-block hidden sign" onclick="document.querySelector('#name-input').focus()"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()"></div>
+          <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()"></div>
         </div>
         
         <div class="horizontal-block" style="gap: 5px">
