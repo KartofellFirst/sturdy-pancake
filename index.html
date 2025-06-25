@@ -23,7 +23,6 @@
         min-height: 24px; 
         font-size: 16px;
         border: none;
-        min-width: 100px;
       }
 
       #name-input:focus, #message-area:focus {
@@ -51,10 +50,10 @@
   </head>
   <body>
       <center><h1>Hello, put your message here:</h1></center>
-      <form class="vertical-block" style="margin: 10px">
+      <form class="vertical-block" style="margin: 10px;min-width: 50px;">
         <div class="message-input no-sign">
           <textarea name="message-text" id="message-area" style="width: 300px"></textarea>
-          <div class="horizontal-block hidden sign"><h6>~</h6><input name="message-author" id="name-input" oninput="resize(this, document.querySelector('#message-area').style.width)"></div>
+          <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize(this, document.querySelector('#message-area').style.width)"></div>
         </div>
         
         <div class="horizontal-block" style="gap: 15px">
@@ -71,7 +70,7 @@
         if (element.scrollWidth >= maxWidth) element.value.slice(0, -1);
         element.style.width = element.scrollWidth;
         console.log("test")
-        console.log(maxWidth, element.scrollWidth)
+        console.log(maxWidth, element.scrollWidth, element)
       }
     </script>
   </body>
