@@ -5,14 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
-    <style>/*------ switch toggle ------*/ .switch {   position: relative;   display: inline-block;   width: 60px;   height: 34px; } .switch input {   opacity: 0;   width: 0;   height: 0; } .slider {   position: absolute;   cursor: pointer;   top: 0;   left: 0;   right: 0;   bottom: 0;   background-color: #ccc;   -webkit-transition: .4s;   transition: .4s; } .slider:before {     position: absolute;     content: "";     left: 5%;     bottom: 5%;     background-color: white;     -webkit-transition: .4s;     transition: .4s;     height: 90%;     aspect-ratio: 1/1; } input:checked + .slider {   background-color: #2196F3; } input:focus + .slider {   box-shadow: 0 0 1px #2196F3; } input:checked + .slider:before {   -webkit-transform: translateX(100%);   -ms-transform: translateX(100%);   transform: translateX(100%); } .slider.round {   border-radius: 9999px; } .slider.round:before {   border-radius: 50%; }</style>
+    <style>/*------ switch toggle ------*/ .switch {   position: relative;   display: inline-block;   width: 40px;   height: 20px; } .switch input {   opacity: 0;   width: 0;   height: 0; } .slider {   position: absolute;   cursor: pointer;   top: 0;   left: 0;   right: 0;   bottom: 0;   background-color: #ccc;   -webkit-transition: .4s;   transition: .4s; } .slider:before {     position: absolute;     content: "";     left: 5%;     bottom: 5%;     background-color: white;     -webkit-transition: .4s;     transition: .4s;     height: 90%;     aspect-ratio: 1/1; } input:checked + .slider {   background-color: #2196F3; } input:focus + .slider {   box-shadow: 0 0 1px #2196F3; } input:checked + .slider:before {   -webkit-transform: translateX(100%);   -ms-transform: translateX(100%);   transform: translateX(100%); } .slider.round {   border-radius: 9999px; } .slider.round:before {   border-radius: 50%; }</style>
     <style>/*------ wrappers ------*/ .horizontal-block { display: flex; width: fit-content; align-items: center; gap: 15px; } .vertical-block { display: flex; justify-items: center; flex-direction: column; gap: 15px; }</style>
     <script>async function Post(url, data) { try { url = "https://for-tests.onrender.com" + url; const response = await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}); if (!response.ok) throw new Error(`Ошибка: ${response.status}`); const result = await response.json(); return result;} catch (error) {console.error('Произошла ошибка при отправке запроса:', error); throw error;}}</script>
     <script>async function Get(url) { try { url = "https://for-tests.onrender.com" + url; const response = await fetch(url); if (!response.ok) throw new Error(`Ошибка: ${response.status}`); const result = await response.json(); return result;} catch (error) {console.error("Произошла ошибка при выполнении GET-запроса:", error); throw error;}}</script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        display: block;
+        position: relative;
+      }
+    </style>
   </head>
   <body>
       <h1>Hello, put your message here:</h1>
-      <form class="vertical-block">
+      <form class="vertical-block" style="margin: 10px">
         <div class="horizontal-block">
           <h5>dont want to give your name</h5>
           <label class="switch">
