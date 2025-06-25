@@ -28,7 +28,7 @@
         <div class="horizontal-block">
           <h5>dont want to give your name</h5>
           <label class="switch">
-            <input type="checkbox" onchange="if (this.value == 1) { document.querySelector('#name-input').classList.add('hidden') } else { document.querySelector('#name-input').classList.remove('hidden') }">
+            <input type="checkbox" onchange="document.querySelector('#name-input').classList.toggle('hidden')">
             <span class="slider round"></span>
           </label>
         </div>
