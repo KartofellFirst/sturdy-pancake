@@ -9,18 +9,10 @@
     <script>async function Get(url) { try { url = "https://for-tests.onrender.com" + url; const response = await fetch(url); if (!response.ok) throw new Error(`Ошибка: ${response.status}`); const result = await response.json(); return result;} catch (error) {console.error("Произошла ошибка при выполнении GET-запроса:", error); throw error;}}</script>
   </head>
   <body>
-      <h1>Welcome to My Website</h1>  
-      <input onchange="if(confirm('отправить на сервер?')) Post('/add', this.value); update()">
-      <h4 id="text"> </h4>
-    <script>
-function update() {
-  const mt = document.querySelector("#text")
-  mt.textContent = ""
-  Get('/messages')
-  .then (data => data.forEach(el => {mt.textContent += el + ", "}))
-  .catch (error => mt.textContent = "error: " + error)
-}
-update();
+      <h1>Hello, put your message here:</h1>
+      <form>
+        <toggle type="toggle" onchange="if (this.value == 1) { document.querySelector('#name-input').classlist.add('hidden') } else { document.querySelector('#name-input').classlist.remove('hidden') }">dont want to give you name</toggle>
+      </form>
     </script>
   </body>
 </html>
