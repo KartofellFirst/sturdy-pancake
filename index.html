@@ -17,9 +17,7 @@
         position: relative;
       }
 
-      .hidden {
-        display: none;
-      }
+      .hidden { display: none; }
 
       #name-input, #message-area {
         width: 100%; 
@@ -37,12 +35,23 @@
         bottom: 5px;
         right: 5px;
       }
+
+      .message-input {
+        border: 1px solid gray;
+        border-radius: 10px;
+        overflow: hidden;
+        max-width: 98vw;
+        display: flex;
+        width: fit-content;
+      }
+
+      .message-input.no-sign { padding-bottom: 24px; }
     </style>
   </head>
   <body>
       <center><h1>Hello, put your message here:</h1></center>
       <form class="vertical-block" style="margin: 10px">
-        <div style="border: 1px solid gray; border-radius: 10px;">
+        <div class="message-input no-sign">
           <textarea name="message-text" id="message-area"></textarea>
           <div class="horizontal-block hidden sign"><h6>~</h6><input name="message-author" id="name-input" style="min-width: 100px; width: fit-content;"></div>
         </div>
@@ -50,7 +59,7 @@
         <div class="horizontal-block" style="gap: 15px">
           <h5>dont want to give your name</h5>
           <label class="switch">
-            <input type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden')">
+            <input type="checkbox" checked onchange="document.querySelector('.message-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');">
             <span class="slider round"></span>
           </label>
         </div>
