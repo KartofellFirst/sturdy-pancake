@@ -11,7 +11,13 @@
   <body>
       <h1>Hello, put your message here:</h1>
       <form>
-        <toggle type="toggle" onchange="if (this.value == 1) { document.querySelector('#name-input').classlist.add('hidden') } else { document.querySelector('#name-input').classlist.remove('hidden') }">dont want to give you name</toggle>
+        <div>
+          <h5>dont want to give you name</h5>
+          <label class="switch">
+            <input type="checkbox" onchange="if (this.value == 1) { document.querySelector('#name-input').classlist.add('hidden') } else { document.querySelector('#name-input').classlist.remove('hidden') }">
+            <span class="slider round"></span>
+          </label>
+        </div>
       </form>
     </script>
   </body>
