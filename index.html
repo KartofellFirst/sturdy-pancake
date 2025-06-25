@@ -20,6 +20,12 @@
       .hidden {
         display: none;
       }
+
+      #name-input, #message-area {
+        width: 100%; 
+        min-height: 24px; 
+        font-size: 16px
+      }
     </style>
   </head>
   <body>
@@ -33,7 +39,7 @@
           </label>
         </div>
         <input name="message-author" class="hidden" id="name-input">
-        <textarea name="message-text" style="width: 100%; min-height: 30px; font-size: 16px" id="message-area"></textarea>
+        <textarea name="message-text" id="message-area"></textarea>
       </form>
     </script>
   </body>
