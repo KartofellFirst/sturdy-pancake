@@ -40,7 +40,7 @@
         border: 1px solid gray;
         border-radius: 10px;
         overflow: hidden;
-        max-width: 98vw;
+        max-width: 97vw;
         display: flex;
         width: fit-content;
         padding-bottom: 24px;
@@ -78,7 +78,7 @@
       <form class="vertical-block" style="margin: 10px;min-width: 50px;">
         <div class="message-input no-sign">
           <div class="resizable-wrapper">
-            <textarea id="message-area" style="width: 300px;max-width: 98vw;" name="message-text"></textarea>
+            <textarea id="message-area" style="width: 300px;max-width: 97vw;" name="message-text"></textarea>
             <div class="resizer"></div>
           </div>
 
@@ -133,9 +133,6 @@
         let attempts = 0;
         if (element.scrollWidth >= maxWidth - 10 && attempts++ < 30) { element.value = element.value.slice(0, -1) };
         element.style.width = "0px";
-        element.style.width = `${element.scrollWidth}px`;
-        console.log("test")
-        console.log(maxWidth, element.scrollWidth, element)
       }
     </script>
   </body>
