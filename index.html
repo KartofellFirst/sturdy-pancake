@@ -68,7 +68,7 @@
       function resize(element, widthFromCSS) {
         const maxWidth = parseInt(widthFromCSS);
         if (element.scrollWidth >= maxWidth) element.value.slice(0, -1);
-        element.style.width = element.scrollWidth;
+        element.style.width = `${element.scrollWidth}px`;
         console.log("test")
         console.log(maxWidth, element.scrollWidth, element)
       }
