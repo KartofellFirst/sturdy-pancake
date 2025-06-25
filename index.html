@@ -53,7 +53,7 @@
       <center><h1>Hello, put your message here:</h1></center>
       <form class="vertical-block" style="margin: 10px">
         <div class="message-input no-sign">
-          <textarea name="message-text" id="message-area" width="300px"></textarea>
+          <textarea name="message-text" id="message-area" style="width: 300px"></textarea>
           <div class="horizontal-block hidden sign"><h6>~</h6><input name="message-author" id="name-input" oninput="resize(this, document.querySelector('#message-area').style.width)"></div>
         </div>
         
@@ -66,7 +66,8 @@
         </div>
       </form>
     <script>
-      function resize(element, maxWidth) {
+      function resize(element, widthFromCSS) {
+        const maxWidth = parseInt(widthFromCSS);
         if (element.scrollWidth >= maxWidth) element.value.slice(0, -1);
         element.style.width = element.scrollWidth;
         console.log("test")
