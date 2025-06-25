@@ -5,35 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <script>async function Post(url, data) { try { url = "https://for-tests.onrender.com" + url; const response = await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}); if (!response.ok) throw new Error(`Ошибка: ${response.status}`); const result = await response.json(); return result;} catch (error) {console.error('Произошла ошибка при отправке запроса:', error); throw error;}}</script>
+    <script>async function Get(url) { try { url = "https://for-tests.onrender.com" + url; const response = await fetch(url); if (!response.ok) throw new Error(`Ошибка: ${response.status}`); const result = await response.json(); return result;} catch (error) {console.error("Произошла ошибка при выполнении GET-запроса:", error); throw error;}}</script>
   </head>
   <body>
       <h1>Welcome to My Website</h1>  
       <input onchange="if(confirm('отправить на сервер?')) Post('/add', this.value); update()">
       <h4 id="text"> </h4>
     <script>
-async function Post(url, data) {
-  try {
-    url = "https://for-tests.onrender.com" + url
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-  
-    if (!response.ok) {
-      throw new Error(`Ошибка: ${response.status}`);
-    }
-  
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Произошла ошибка при отправке запроса:', error);
-    throw error;
-  }
-}
-
 function update() {
   const mt = document.querySelector("#text")
   mt.textContent = ""
