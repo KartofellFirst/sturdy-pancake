@@ -67,8 +67,9 @@
         height: 16px;
         right: 2px;
         bottom: 2px;
-        background: lightgray;
         cursor: nwse-resize;
+        border-bottom: 2px solid #7d7dbf;
+        border-right: 2px solid #7d7dbf;
       }
     </style>
   </head>
@@ -130,7 +131,7 @@
         const element = document.querySelector('#name-input');
         const maxWidth = parseInt(textarea.style.width);
         let attempts = 0;
-        if (element.scrollWidth >= maxWidth - 10 && atempts++ < 30) { element.value = element.value.slice(0, -1) };
+        if (element.scrollWidth >= maxWidth - 10 && attempts++ < 30) { element.value = element.value.slice(0, -1) };
         element.style.width = "0px";
         element.style.width = `${element.scrollWidth}px`;
         console.log("test")
