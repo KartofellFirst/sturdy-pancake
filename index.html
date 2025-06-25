@@ -67,13 +67,14 @@
     <script>
       const textarea = document.querySelector("#message-area");
 
-      const observer = new ResizeObserver(entries => {for (let entry of entries) {resize()}});
+      const message_observer = new ResizeObserver(entries => {for (let entry of entries) {resize()}});
       message_observer.observe(textarea);
       
       function resize() {
         const element = document.querySelector('#name-input');
         const maxWidth = parseInt(textarea.style.width);
         while (element.scrollWidth >= maxWidth - 10) { element.value = element.value.slice(0, -1) };
+        element.style.width = "0px";
         element.style.width = `${element.scrollWidth}px`;
         console.log("test")
         console.log(maxWidth, element.scrollWidth, element)
