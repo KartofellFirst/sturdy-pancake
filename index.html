@@ -85,9 +85,9 @@
           <div class="horizontal-block hidden sign" onclick="document.querySelector('#name-input').focus()"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()"></div>
         </div>
         
-        <div class="horizontal-block" style="gap: 15px">
-          <h5>dont want to give your name</h5>
-          <label class="switch">
+        <div class="horizontal-block" style="gap: 5px">
+          <h5 style="font-size: 14px;">stay anonimus</h5>
+          <label class="switch" style="width: 28px; height: 14px;">
             <input type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');">
             <span class="slider round"></span>
           </label>
