@@ -31,6 +31,8 @@
   <body>
       <center><h1>Hello, put your message here:</h1></center>
       <form class="vertical-block" style="margin: 10px">
+        <textarea name="message-text" id="message-area"></textarea>
+        
         <div class="horizontal-block">
           <h5>dont want to give your name</h5>
           <label class="switch">
@@ -38,8 +40,7 @@
             <span class="slider round"></span>
           </label>
         </div>
-        <input name="message-author" class="hidden" id="name-input">
-        <textarea name="message-text" id="message-area"></textarea>
+        <div class="horizontal-block"><h6>~</h6><input name="message-author" class="hidden" id="name-input" style="min-width: 100px"></div>
       </form>
     </script>
   </body>
