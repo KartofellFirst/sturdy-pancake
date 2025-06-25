@@ -47,13 +47,40 @@
       }
 
       .message-input.no-sign { padding-bottom: 0px; }
+
+      .resizable-wrapper {
+        position: relative;
+        display: inline-block;
+      }
+      
+      textarea {
+        resize: none; /* отключаем стандартное растягивание */
+        width: 300px;
+        height: 150px;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      
+      .resizer {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        right: 2px;
+        bottom: 2px;
+        background: lightgray;
+        cursor: nwse-resize;
+      }
     </style>
   </head>
   <body>
       <center><h1>Hello, put your message here:</h1></center>
       <form class="vertical-block" style="margin: 10px;min-width: 50px;">
         <div class="message-input no-sign" onclick="document.querySelector('#name-input').focus()">
-          <textarea name="message-text" id="message-area" style="width: 300px" onresize=""></textarea>
+          <div class="resizable-wrapper">
+            <textarea id="myTextarea" style="width: 300px" name="message-text"></textarea>
+            <div class="resizer"></div>
+          </div>
+
           <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()"></div>
         </div>
         
@@ -67,9 +94,37 @@
       </form>
     <script>
       const textarea = document.querySelector("#message-area");
+      const resizer = document.querySelector(".resizer");
+      
+      let isResizing = false;
 
-      const message_observer = new ResizeObserver(entries => {for (let entry of entries) {resize()}});
-      message_observer.observe(textarea);
+      resizer.addEventListener("touchstart", e => {
+        isResizing = true;
+      }, { passive: true });
+      
+      resizer.addEventListener("mousedown", e => {
+        isResizing = true;
+        e.preventDefault();
+      });
+      
+      document.addEventListener("mousemove", e => {
+        if (isResizing) {
+          textarea.style.width = e.clientX - textarea.offsetLeft + "px";
+          textarea.style.height = e.clientY - textarea.offsetTop + "px";
+          resize();
+        }
+      });
+      
+      document.addEventListener("mouseup", () => isResizing = false);
+      document.addEventListener("touchend", () => isResizing = false);
+      document.addEventListener("touchmove", e => {
+        if (isResizing && e.touches[0]) {
+          const touch = e.touches[0];
+          textarea.style.width = touch.clientX - textarea.offsetLeft + "px";
+          textarea.style.height = touch.clientY - textarea.offsetTop + "px";
+          resize();
+        }
+      }, { passive: false });
       
       function resize() {
         const element = document.querySelector('#name-input');
