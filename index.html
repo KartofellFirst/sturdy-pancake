@@ -68,7 +68,7 @@
       function resize() {
         const element = document.querySelector('#name-input');
         const maxWidth = parseInt(document.querySelector('#message-area').style.width);
-        if (element.scrollWidth >= maxWidth - 10) element.value.slice(0, -1);
+        if (element.scrollWidth >= maxWidth - 10) element.value = element.value.slice(0, -1);
         element.style.width = `${element.scrollWidth}px`;
         console.log("test")
         console.log(maxWidth, element.scrollWidth, element)
