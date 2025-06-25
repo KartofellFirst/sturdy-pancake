@@ -20,7 +20,6 @@
       .hidden { display: none; }
 
       #name-input, #message-area {
-        width: 95vw; 
         min-height: 24px; 
         font-size: 16px;
         border: none;
@@ -54,7 +53,7 @@
       <center><h1>Hello, put your message here:</h1></center>
       <form class="vertical-block" style="margin: 10px">
         <div class="message-input no-sign">
-          <textarea name="message-text" id="message-area"></textarea>
+          <textarea name="message-text" id="message-area" width="300px"></textarea>
           <div class="horizontal-block hidden sign"><h6>~</h6><input name="message-author" id="name-input" oninput="resize(this, document.querySelector('#message-area').style.width)"></div>
         </div>
         
