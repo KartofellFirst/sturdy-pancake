@@ -70,6 +70,8 @@
       function resize(element, maxWidth) {
         if (element.scrollWidth >= maxWidth) element.value.slice(0, -1);
         element.style.width = element.scrollWidth;
+        console.log("test")
+        console.log(maxWidth, element.scrollWidth)
       }
     </script>
   </body>
