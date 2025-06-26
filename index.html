@@ -97,7 +97,7 @@
             </label>
           </div>
           
-            <textarea id="message-area" style="width: 100%;" name="message-text"></textarea>
+            <div class="message-input"><textarea id="message-area" style="width: 100%;" name="message-text"></textarea></div>
             <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
         </form>
         <button class="send-btn" onclick="let author; if (document.querySelector('#anonimus').value == 1) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author }).then(data => window.location.href = `/?id=${data.id}`)">send</button>
@@ -111,39 +111,6 @@
     <script>
       // 1
       const textarea = document.querySelector("#message-area");
-      const resizer = document.querySelector(".resizer");
-      
-      let isResizing = false;
-
-      resizer.addEventListener("touchstart", e => {
-        isResizing = true;
-      }, { passive: true });
-      
-      resizer.addEventListener("mousedown", e => {
-        isResizing = true;
-        e.preventDefault();
-      });
-      
-      document.addEventListener("mousemove", e => {
-        if (isResizing) {
-          e.preventDefault();
-          textarea.style.width = e.clientX - textarea.offsetLeft + "px";
-          textarea.style.height = e.clientY - textarea.offsetTop + "px";
-          resize();
-        }
-      });
-      
-      document.addEventListener("mouseup", () => isResizing = false);
-      document.addEventListener("touchend", () => isResizing = false);
-      document.addEventListener("touchmove", e => {
-        if (isResizing && e.touches[0]) {
-          e.preventDefault();
-          const touch = e.touches[0];
-          textarea.style.width = touch.clientX - textarea.offsetLeft + "px";
-          textarea.style.height = touch.clientY - textarea.offsetTop + "px";
-          resize();
-        }
-      }, { passive: false });
       
       function resize() {
         const element = document.querySelector('#name-input');
