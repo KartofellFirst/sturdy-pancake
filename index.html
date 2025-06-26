@@ -82,7 +82,7 @@
             <div class="resizer"></div>
           </div>
 
-          <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()"></div>
+          <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
         </div>
         
         <div class="horizontal-block" style="gap: 5px">
@@ -133,6 +133,7 @@
         let attempts = 0;
         if (element.scrollWidth >= maxWidth - 10 && attempts++ < 30) { element.value = element.value.slice(0, -1) };
         element.style.width = "0px";
+        element.style.width = `${element.scrollWidth}px`;
       }
     </script>
   </body>
