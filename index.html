@@ -110,6 +110,7 @@
       
       document.addEventListener("mousemove", e => {
         if (isResizing) {
+          e.preventDefault();
           textarea.style.width = e.clientX - textarea.offsetLeft + "px";
           textarea.style.height = e.clientY - textarea.offsetTop + "px";
           resize();
@@ -120,6 +121,7 @@
       document.addEventListener("touchend", () => isResizing = false);
       document.addEventListener("touchmove", e => {
         if (isResizing && e.touches[0]) {
+          e.preventDefault();
           const touch = e.touches[0];
           textarea.style.width = touch.clientX - textarea.offsetLeft + "px";
           textarea.style.height = touch.clientY - textarea.offsetTop + "px";
