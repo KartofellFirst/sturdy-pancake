@@ -71,6 +71,26 @@
         border-bottom: 2px solid #7d7dbf;
         border-right: 2px solid #7d7dbf;
       }
+
+      .bottom-wrapper {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        display: flex;
+        justify-items: center;
+        justiffy-content: center;
+        align-items: center;
+        padding: 5px;
+        width: 100vw;
+        background-color: white;
+      }
+
+      .send-btn {
+        border: none;
+        background-color: #7d7dbf;
+        border-radius: 5px;
+        padding: 5px;
+      }
     </style>
   </head>
   <body>
@@ -86,13 +106,14 @@
         
         <div class="message-input no-sign" onclick="document.querySelector('#name-input').focus()">
           <div class="resizable-wrapper" onclick="event.stopPropagation();">
-            <textarea id="message-area" style="width: 94vw;max-width: 97vw;" name="message-text"></textarea>
+            <textarea id="message-area" style="width: 94vw;max-width: 94vw;" name="message-text"></textarea>
             <div class="resizer"></div>
           </div>
 
           <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
         </div>
       </form>
+    <div class="bottom-wrapper"><button class="send-btn">send</button></div>
     <script>
       const textarea = document.querySelector("#message-area");
       const resizer = document.querySelector(".resizer");
