@@ -76,6 +76,14 @@
   <body>
       <center><h1>Hello, put your message here:</h1></center>
       <form class="vertical-block" style="margin: 10px;min-width: 50px;">
+        <div class="horizontal-block" style="gap: 5px">
+          <h5 style="font-size: 14px;">stay anonimus</h5>
+          <label class="switch" style="width: 28px; height: 14px;">
+            <input type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');resize()">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        
         <div class="message-input no-sign" onclick="document.querySelector('#name-input').focus()">
           <div class="resizable-wrapper" onclick="event.stopPropagation();">
             <textarea id="message-area" style="width: 300px;max-width: 97vw;" name="message-text"></textarea>
@@ -83,14 +91,6 @@
           </div>
 
           <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
-        </div>
-        
-        <div class="horizontal-block" style="gap: 5px">
-          <h5 style="font-size: 14px;">stay anonimus</h5>
-          <label class="switch" style="width: 28px; height: 14px;">
-            <input type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');">
-            <span class="slider round"></span>
-          </label>
         </div>
       </form>
     <script>
