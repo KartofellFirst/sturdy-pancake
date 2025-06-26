@@ -72,24 +72,17 @@
         border-right: 2px solid #7d7dbf;
       }
 
-      .bottom-wrapper {
-        position: fixed;
-        bottom: 0px;
-        left: 0px;
-        display: flex;
-        justify-items: center;
-        justiffy-content: center;
-        align-items: center;
-        padding: 5px;
-        width: 100vw;
-        background-color: white;
-      }
-
       .send-btn {
         border: none;
         background-color: #7d7dbf;
         border-radius: 5px;
-        padding: 5px;
+        padding: 7px;
+        min-width: 45px;
+        font-size: 16px;
+        position: absolute;
+        right: 1px;
+        margin-right: 3vw;
+        margin-top: -7px;
       }
     </style>
   </head>
@@ -99,7 +92,7 @@
         <div class="horizontal-block" style="gap: 5px">
           <h5 style="font-size: 14px;">stay anonimus</h5>
           <label class="switch" style="width: 28px; height: 14px;">
-            <input type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');resize()">
+            <input id="anonimus" type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');resize()">
             <span class="slider round"></span>
           </label>
         </div>
@@ -113,7 +106,7 @@
           <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
         </div>
       </form>
-    <div class="bottom-wrapper"><button class="send-btn">send</button></div>
+    <button class="send-btn" onclic="let author;if (document.querySelctor('#anonimus').value == 1) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author })">send</button>
     <script>
       const textarea = document.querySelector("#message-area");
       const resizer = document.querySelector(".resizer");
