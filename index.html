@@ -28,7 +28,7 @@
       }
 
       .message-input {
-        border: 1px solid white;
+        border: 1px solid #7d7a7a;
         border-radius: 10px;
         overflow: hidden;
         max-width: 94vw;
@@ -39,7 +39,7 @@
       }
 
       .message-input.focus {
-        border-color: #7d7a7a; 
+        border-color: #333; 
       }
 
       .message-input.no-sign { padding-bottom: 0px; }
@@ -104,7 +104,7 @@
             <div class="message-input no-sign"><textarea onfocusout="this.parentElement.classList.remove('focus')" onfocus="this.parentElement.classList.add('focus')" id="message-area" style="width: 100%;" name="message-text"></textarea></div>
             <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
         </form>
-        <button class="send-btn" onclick="let author; if (document.querySelector('#anonimus').value == 1) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author }).then(data => window.location.href = `/?id=${data.id}`)">send</button>
+        <button class="send-btn" onclick="let author; if (document.querySelector('#anonimus').checked) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author }).then(data => window.location.href = `/?id=${data.id}`)">send</button>
       </main1>
 <!--        -->
       <main2 class="hidden">
@@ -118,7 +118,7 @@
       
       function resize() {
         const element = document.querySelector('#name-input');
-        const maxWidth = parseInt(textarea.style.width);
+        const maxWidth = parseInt(textarea.clientWidth);
         let attempts = 0;
         if (element.scrollWidth >= maxWidth - 10 && attempts++ < 30) { element.value = element.value.slice(0, -1) };
         element.style.width = "0px";
