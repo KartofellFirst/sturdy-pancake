@@ -106,7 +106,7 @@
           <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
         </div>
       </form>
-    <button class="send-btn" onclic="let author;if (document.querySelctor('#anonimus').value == 1) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author })">send</button>
+    <button class="send-btn" onclic="let author;if (document.querySelector('#anonimus').value == 1) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author }).then(data=>console.log(data))">send</button>
     <script>
       const textarea = document.querySelector("#message-area");
       const resizer = document.querySelector(".resizer");
