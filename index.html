@@ -9,16 +9,7 @@
     <style>/*------ wrappers ------*/ .horizontal-block { display: flex; width: fit-content; align-items: center; } .vertical-block { display: flex; justify-items: center; flex-direction: column; }</style>
     <script>async function Post(url, data) { try { url = "https://backend.zhmikh.ru" + url; const response = await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}); if (!response.ok) throw new Error(`Ошибка: ${response.status}`); const result = await response.json(); return result;} catch (error) {console.error('Произошла ошибка при отправке запроса:', error); throw error;}}</script>
     <script>async function Get(url) { try { url = "https://backend.zhmikh.ru" + url; const response = await fetch(url); if (!response.ok) throw new Error(`Ошибка: ${response.status}`); const result = await response.json(); return result;} catch (error) {console.error("Произошла ошибка при выполнении GET-запроса:", error); throw error;}}</script>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        position: relative;
-      }
-
-      .hidden { display: none; }
-
+    <style>/*------ for main1 ------*/
       #name-input, #message-area {
         min-height: 24px; 
         font-size: 16px;
@@ -47,29 +38,13 @@
       }
 
       .message-input.no-sign { padding-bottom: 0px; }
-
-      .resizable-wrapper {
-        position: relative;
-        display: inline-block;
-      }
       
       #message-area {
-        resize: none; /* отключаем стандартное растягивание */
-        width: 94vw;
+        resize: none; 
+        width: 34.5vw;
         height: 150px;
         padding: 10px;
         box-sizing: border-box;
-      }
-      
-      .resizer {
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        right: 5px;
-        bottom: 5px;
-        cursor: nwse-resize;
-        border-bottom: 2px solid #7d7dbf;
-        border-right: 2px solid #7d7dbf;
       }
 
       .send-btn {
@@ -85,29 +60,56 @@
         margin-top: -7px;
       }
     </style>
+    <style>/*------ for main2 ------*/
+    </style>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      .hidden { display: none; }
+
+      main {
+        width: 75vw;
+        height: 50vh;
+        background: #333;
+        border: 2px solid #7d7a7a;
+        border-radius: 15px;
+        justify-self: center;
+        overflow: hidden;
+      }
+    </style>
   </head>
   <body>
-      <center><h1>Hello, put your message here:</h1></center>
-      <form class="vertical-block" style="margin: 10px;min-width: 50px;">
-        <div class="horizontal-block" style="gap: 5px">
-          <h5 style="font-size: 14px;">stay anonimus</h5>
-          <label class="switch" style="width: 28px; height: 14px;">
-            <input id="anonimus" type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');resize()">
-            <span class="slider round"></span>
-          </label>
-        </div>
-        
-        <div class="message-input no-sign" onclick="document.querySelector('#name-input').focus()">
-          <div class="resizable-wrapper" onclick="event.stopPropagation();">
-            <textarea id="message-area" style="width: 94vw;max-width: 94vw;" name="message-text"></textarea>
-            <div class="resizer"></div>
+    <center><h1>Hello, put your message here:</h1></center>
+<!--      -->
+    <main>
+      <main1 class="hidden">
+        <form class="vertical-block" style="margin: 10px;min-width: 50px;">
+          <div class="horizontal-block" style="gap: 5px">
+            <h5 style="font-size: 14px;">stay anonimus</h5>
+            <label class="switch" style="width: 28px; height: 14px;">
+              <input id="anonimus" type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');resize()">
+              <span class="slider round"></span>
+            </label>
           </div>
-
-          <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
-        </div>
-      </form>
-    <button class="send-btn" onclick="let author;if (document.querySelector('#anonimus').value == 1) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author }).then(data => window.location.href = `/?my_id=${data.id}`)">send</button>
+          
+            <textarea id="message-area" style="width: 100%;" name="message-text"></textarea>
+            <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
+        </form>
+        <button class="send-btn" onclick="let author; if (document.querySelector('#anonimus').value == 1) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author }).then(data => window.location.href = `/?id=${data.id}`)">send</button>
+      </main1>
+<!--        -->
+      <main2 class="hidden">
+        test
+      </main2>
+    </main>
+    <script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden')</script>
     <script>
+      // 1
       const textarea = document.querySelector("#message-area");
       const resizer = document.querySelector(".resizer");
       
