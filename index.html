@@ -28,13 +28,17 @@
       }
 
       .message-input {
-        border: 1px solid gray;
+        border: 1px solid white;
         border-radius: 10px;
         overflow: hidden;
         max-width: 94vw;
         display: flex;
         width: fit-content;
         padding-bottom: 24px;
+      }
+
+      .message-input.focus {
+        border-color: #7d7a7a; 
       }
 
       .message-input.no-sign { padding-bottom: 0px; }
@@ -96,8 +100,8 @@
               <span class="slider round"></span>
             </label>
           </div>
-          
-            <div class="message-input"><textarea id="message-area" style="width: 100%;" name="message-text"></textarea></div>
+      
+            <div class="message-input no-sign"><textarea onfocusout="this.parentElement.classList.remove('focus')" onfocus="this.parentElement.classList.add('focus')" id="message-area" style="width: 100%;" name="message-text"></textarea></div>
             <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
         </form>
         <button class="send-btn" onclick="let author; if (document.querySelector('#anonimus').value == 1) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author }).then(data => window.location.href = `/?id=${data.id}`)">send</button>
