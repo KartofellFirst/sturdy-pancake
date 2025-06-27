@@ -109,7 +109,7 @@
             <div class="message-input no-sign"><textarea onfocusout="this.parentElement.classList.remove('focus')" onfocus="this.parentElement.classList.add('focus')" id="message-area" style="width: 100%;" name="message-text"></textarea></div>
             <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
         </form>
-        <button class="send-btn" onclick="let author; if (document.querySelector('#anonimus').checked) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': textarea.value, 'author': author }).then(data => window.location.href = `/?id=${data.id}`)">send</button>
+        <button class="send-btn" onclick="let author; if (document.querySelector('#anonimus').checked) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': document.querySelector('#message-area').value, 'author': author }).then(data => window.location.href = `/?id=${data.id}`)">send</button>
       </main1>
 <!--        -->
       <main2 class="hidden">
@@ -117,7 +117,7 @@
       </main2>
     </main>
     <script>
-      const main = document.querySelector('main1').contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
+      const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       let minX, minY, maxX, maxY = 0;
       Get('/messages').then(data => data.forEach((msg) => {
           try {
@@ -131,7 +131,7 @@
           document.body.style.height = `${minY + maxY}px`;
           main.style.left = `${minX}px`;
           main.style.top = `${minY}px`;
-          main.scrollIntoView({'block': 'center', 'inline': center});
+          main.scrollIntoView({'block': 'center', 'inline': 'center'});
         })
         spawnMessages(data, {'x': minX, 'y': minY});
       ).catch(error => console.error(error))
@@ -143,9 +143,7 @@
           if (new URLSearchParams(location.search).has("id")) classes = (new URLSearchParams(location.search).id == msg.id && msg.pos[0] != null)? ['message', 'vertical-block', 'from-user'] : ['message', 'vertical-block'];
           message.classList.add(...classes)
 
-          if classes.has('from-user') {
-            addEventListeners(message);
-          }
+          if (classes.includes('from-user')) addEventListeners(message);
 
           const text = document.createElement('span');
           text.classList.add('msg-text');
