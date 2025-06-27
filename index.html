@@ -9,6 +9,8 @@
     <style>/*------ wrappers ------*/ .horizontal-block { display: flex; width: fit-content; align-items: center; } .vertical-block { display: flex; justify-items: center; flex-direction: column; }</style>
     <script>async function Post(url, data) { try { url = "https://backend.zhmikh.ru" + url; const response = await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)}); if (!response.ok) throw new Error(`Ошибка: ${response.status}`); const result = await response.json(); return result;} catch (error) {console.error('Произошла ошибка при отправке запроса:', error); throw error;}}</script>
     <script>async function Get(url) { try { url = "https://backend.zhmikh.ru" + url; const response = await fetch(url); if (!response.ok) throw new Error(`Ошибка: ${response.status}`); const result = await response.json(); return result;} catch (error) {console.error("Произошла ошибка при выполнении GET-запроса:", error); throw error;}}</script>
+    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden')</script>
+    <!-- name-input resize --><script>function resize() { const element = document.querySelector('#name-input'); const maxWidth = parseInt(document.querySelector("#message-area").clientWidth); let attempts = 0; if (element.scrollWidth >= maxWidth - 10 && attempts++ < 30) { element.value = element.value.slice(0, -1) }; element.style.width = "0px"; element.style.width = `${element.scrollWidth}px`;}
     <style>/*------ for main1 ------*/
       #name-input, #message-area {
         min-height: 24px; 
@@ -114,19 +116,64 @@
         test
       </main2>
     </main>
-    <script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden')</script>
     <script>
-      // 1
-      const textarea = document.querySelector("#message-area");
-      
-      function resize() {
-        const element = document.querySelector('#name-input');
-        const maxWidth = parseInt(textarea.clientWidth);
-        let attempts = 0;
-        if (element.scrollWidth >= maxWidth - 10 && attempts++ < 30) { element.value = element.value.slice(0, -1) };
-        element.style.width = "0px";
-        element.style.width = `${element.scrollWidth}px`;
+      const main = document.querySelector('main1').contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
+      let minX, minY, maxX, maxY = 0;
+      Get('/messages').then(data => data.forEach((msg) => {
+          try {
+            if (minX > msg.pos[0]) minX = msg.pos[0];
+            if (minY > msg.pos[1]) minY = msg.pos[1];
+            if (maxX < msg.pos[0]) maxX = msg.pos[0];
+            if (maxY < msg.pos[1]) maxY = msg.pos[1];
+          } catch { console.log(`message has not positioned. id: ${msg.id}`) }
+  
+          document.body.style.width = `${minX + maxX}px`;
+          document.body.style.height = `${minY + maxY}px`;
+          main.style.left = `${minX}px`;
+          main.style.top = `${minY}px`;
+          main.scrollIntoView({'block': 'center', 'inline': center});
+        })
+        spawnMessages(data, {'x': minX, 'y': minY});
+      ).catch(error => console.error(error))
+
+      function spawnMessages(data, min) {
+        data.forEach(msg => {
+          const message = document.createElement('div');
+          let classes;
+          if (new URLSearchParams(location.search).has("id")) classes = (new URLSearchParams(location.search).id == msg.id && msg.pos[0] != null)? ['message', 'vertical-block', 'from-user'] : ['message', 'vertical-block'];
+          message.classList.add(...classes)
+
+          if classes.has('from-user') {
+            addEventListeners(message);
+          }
+
+          const text = document.createElement('span');
+          text.classList.add('msg-text');
+          text.textContent = msg.text;
+          message.appendChild(text);
+
+          if (msg.author) {
+            const sign = document.createElement('span');
+            sign.classList.add('msg-sign');
+            sign.textContent = `~${msg.author}`;
+            message.appendChild(sign);
+          }
+
+          const date = document.createElement('span');
+          date.classList.add('msg-date');
+          date.textContent = msg.date;
+          message.appendChild(date)
+
+          message.style.left = msg.pos[0] > 0? min.x + msg.pos[0] : msg.pos[0];
+          message.style.top = msg.pos[1] > 0? min.y + msg.pos[1] : msg.pos[1];
+          document.body.appendChild(message);
+        })
       }
+
+      function addEventListeners(element) {
+        console.log(element)
+      }
+    </script>
     </script>
   </body>
 </html>
