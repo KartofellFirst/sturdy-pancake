@@ -86,6 +86,7 @@
         padding: 0;
         box-sizing: border-box;
         position: relative;
+        overscroll-behaviour: none;
       }
 
       .hidden { display: none; }
@@ -264,6 +265,8 @@
         let shiftX = 0;
         let shiftY = 0;
         let isDragging = false;
+
+        element.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
       
         const onPointerDown = (event) => {
           const clientX = event.clientX ?? event.touches?.[0]?.clientX;
@@ -280,7 +283,7 @@
           event.preventDefault();
           event.stopPropagation();
           document.body.style.touchAction = "none";
-          element.body.style.touchAction = "none";
+          element.style.touchAction = "none";
         };
       
         const onPointerMove = (event) => {
@@ -297,7 +300,7 @@
           event.preventDefault();
           event.stopPropagation();
           document.body.style.touchAction = "none";
-          element.body.style.touchAction = "none";
+          element.style.touchAction = "none";
         };
       
         const onPointerUp = () => {
@@ -325,7 +328,7 @@
             }
 
             document.body.style.touchAction = "auto";
-            element.body.style.touchAction = "auto";
+            element.style.touchAction = "auto";
           });
       
           // Подсвечиваем только передвигаемый элемент
