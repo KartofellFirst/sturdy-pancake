@@ -311,6 +311,7 @@
 
           // features
           if (x - shiftX < 0) {
+            console.log(x - shiftX)
             element.style.left = "0px";
             container.style.paddingLeft = `${x - shiftX}px`;
           }
@@ -318,7 +319,7 @@
             element.style.top = "0px";
             container.style.paddingTop = `${y - shiftY}px`;
           }
-
+  
           console.log(parseInt(container.style.left) - minX);
           console.log(parseInt(container.style.top) - minY);
       
