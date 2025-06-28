@@ -313,11 +313,11 @@
           if (x - shiftX < 0) {
             console.log(x - shiftX)
             element.style.left = "0px";
-            container.style.paddingLeft = `${x - shiftX}px`;
+            container.style.paddingLeft = `${-1 * (x - shiftX)}px`;
           }
           if (y - shiftY < 0) {
             element.style.top = "0px";
-            container.style.paddingTop = `${y - shiftY}px`;
+            container.style.paddingTop = `${-1 * (y - shiftY)}px`;
           }
   
           console.log(parseInt(container.style.left) - minX);
