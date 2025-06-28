@@ -167,36 +167,36 @@
 
       #container {
         display: block; 
+        position: absolute;
+        z-index: 0;
       }
     </style>
   </head>
   <body>
     <div id="container"></div>
-    <div style="position: absolute">
-      <center><h1>Hello, put your message here:</h1></center>
-  <!--      -->
-      <main>
-        <main1 class="hidden">
-          <form class="vertical-block" style="margin: 10px;min-width: 50px;">
-            <div class="horizontal-block" style="gap: 5px; height: 3vh;">
-              <h5 style="font-size: 14px;">stay anonimus</h5>
-              <label class="switch" style="width: 28px; height: 14px;">
-                <input id="anonimus" type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');resize()">
-                <span class="slider round"></span>
-              </label>
-            </div>
-        
-              <div class="message-input no-sign"><textarea onfocusout="this.parentElement.classList.remove('focus')" onfocus="this.parentElement.classList.add('focus')" id="message-area" style="width: 100%;" name="message-text"></textarea></div>
-              <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
-          </form>
-          <button class="send-btn" onclick="let author; if (document.querySelector('#anonimus').checked) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': document.querySelector('#message-area').value, 'author': author }).then(data => window.location.href = `/?id=${data.id}`)">send</button>
-        </main1>
-  <!--        -->
-        <main2 class="hidden">
-          test
-        </main2>
-      </main>
-    </div>
+    <center><h1>Hello, put your message here:</h1></center>
+<!--      -->
+    <main>
+      <main1 class="hidden">
+        <form class="vertical-block" style="margin: 10px;min-width: 50px;">
+          <div class="horizontal-block" style="gap: 5px; height: 3vh;">
+            <h5 style="font-size: 14px;">stay anonimus</h5>
+            <label class="switch" style="width: 28px; height: 14px;">
+              <input id="anonimus" type="checkbox" checked onchange="document.querySelector('#name-input').parentElement.classList.toggle('hidden');document.querySelector('.message-input').classList.toggle('no-sign');resize()">
+              <span class="slider round"></span>
+            </label>
+          </div>
+      
+            <div class="message-input no-sign"><textarea onfocusout="this.parentElement.classList.remove('focus')" onfocus="this.parentElement.classList.add('focus')" id="message-area" style="width: 100%;" name="message-text"></textarea></div>
+            <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
+        </form>
+        <button class="send-btn" onclick="let author; if (document.querySelector('#anonimus').checked) { author = null } else { author = document.querySelector('#name-input').value };Post('/send', { 'text': document.querySelector('#message-area').value, 'author': author }).then(data => window.location.href = `/?id=${data.id}`)">send</button>
+      </main1>
+<!--        -->
+      <main2 class="hidden">
+        test
+      </main2>
+    </main>
     <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden')</script>
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
@@ -307,13 +307,13 @@
           }
 
           // features
-          if (parseInt(element.style.left) < 0) { 
-            difX = -1 * parseInt(element.style.left);
+          if (x - shiftX < 0) { 
+            difX = -1 * parseInt(y - shiftY);
             container.style.left = `${parseInt(container.style.left) + difX}px`;
             element.style.left = `0px`;
           }
-          if (parseInt(element.style.top) < 0) { 
-            difY = -1 * parseInt(element.style.top);
+          if (y - shiftY < 0) { 
+            difY = -1 * parseInt(y - shiftY);
             container.style.top = `${parseInt(container.style.top) + difY}px`;
             element.style.top = `0px`;      
           }
