@@ -280,6 +280,7 @@
           event.preventDefault();
           event.stopPropagation();
           document.body.style.touchAction = "none";
+          element.body.style.touchAction = "none";
         };
       
         const onPointerMove = (event) => {
@@ -296,6 +297,7 @@
           event.preventDefault();
           event.stopPropagation();
           document.body.style.touchAction = "none";
+          element.body.style.touchAction = "none";
         };
       
         const onPointerUp = () => {
@@ -323,6 +325,7 @@
             }
 
             document.body.style.touchAction = "auto";
+            element.body.style.touchAction = "auto";
           });
       
           // Подсвечиваем только передвигаемый элемент
