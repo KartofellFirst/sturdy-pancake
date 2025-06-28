@@ -313,11 +313,26 @@
           if (x - shiftX < 0) {
             console.log(x - shiftX)
             element.style.left = "0px";
-            container.style.paddingLeft = `${-1 * (x - shiftX)}px`;
+            difX += -1 * (x - shiftX)
+            container.style.paddingLeft = `${difX}px`;
+          } else if (difX > 0) {
+            if (difX - (x - shiftX) < 0) { 
+              container.style.paddingLeft = "0px"; 
+              element.style.left = `${x - shiftX - difX}px`; 
+              difX = 0 
+            } else { difX -= x - shiftX; container.style.paddingLeft = `${difX}px` }
           }
           if (y - shiftY < 0) {
+            console.log(y - shiftY)
             element.style.top = "0px";
-            container.style.paddingTop = `${-1 * (y - shiftY)}px`;
+            difY += -1 * (y - shiftY)
+            container.style.paddingYop = `${difY}px`;
+          } else if (difY > 0) {
+            if (difY - (y - shiftY) < 0) { 
+              container.style.paddingTop = "0px"; 
+              element.style.top = `${y - shiftY - difY}px`; 
+              difY = 0 
+            } else { difY -= y - shiftY; container.style.paddingTop = `${difY}px` }
           }
   
           console.log(parseInt(container.style.left) - minX);
