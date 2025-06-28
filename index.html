@@ -301,13 +301,13 @@
           // features
           if (parseInt(element.style.left) < 0) { 
             difX = -1 * parseInt(element.style.left);
-            main.style.left = `${parseInt(main.style.left) + difX}px`;
-            element.style.left = `0px`;
+            document.body.style.left = `${parseInt(document.body.style.left) + difX}px`;
+            // element.style.left = `0px`;
           }
           if (parseInt(element.style.top) < 0) { 
             difY = -1 * parseInt(element.style.top);
-            main.style.top = `${parseInt(main.style.top) + difY}px`;
-            element.style.top = `0px`;
+            document.body.style.top = `${parseInt(document.body.style.top) + difY}px`;
+            // element.style.top = `0px`;
           }
       
           event.preventDefault();
