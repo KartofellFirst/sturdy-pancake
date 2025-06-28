@@ -311,31 +311,16 @@
 
           // features
           if (x - shiftX < 0) {
-            difX = -(x - shiftX);
-            totalShiftX += difX;
-            container.style.left = `${parseInt(container.style.left || 0) + difX}px`;
-            element.style.left = `0px`;
-          } else if (x - shiftX > container.clientWidth - element.offsetWidth) {
-            const extra = (x - shiftX) - (container.clientWidth - element.offsetWidth);
-            totalShiftX -= extra;
-            container.style.left = `${parseInt(container.style.left || 0) - extra}px`;
-            element.style.left = `${container.clientWidth - element.offsetWidth}px`;
+            element.style.left = "0px";
+            container.style.paddingLeft = `${x - shiftX}px`;
           }
-
           if (y - shiftY < 0) {
-            difY = -(y - shiftY);
-            totalShiftY += difY;
-            container.style.top = `${parseInt(container.style.top || 0) + difY}px`;
-            element.style.top = `0px`;
-          } else if (y - shiftY > container.clientHeight - element.offsetHeight) {
-            const extra = (y - shiftY) - (container.clientHeight - element.offsetHeight);
-            totalShiftY -= extra;
-            container.style.top = `${parseInt(container.style.top || 0) - extra}px`;
-            element.style.top = `${container.clientHeight - element.offsetHeight}px`;
+            element.style.top = "0px";
+            container.style.paddingTop = `${y - shiftY}px`;
           }
 
-          console.log(parseInt(element.style.left || '0') - minX - parseInt(container.style.leftt || '0'));
-          console.log(parseInt(element.style.topt || '0') - minY - parseInt(container.style.topt || '0'));
+          console.log(parseInt(container.style.left) - minX);
+          console.log(parseInt(container.style.top) - minY);
       
           event.preventDefault();
           event.stopPropagation();
