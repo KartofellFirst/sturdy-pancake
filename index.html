@@ -194,6 +194,7 @@
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       let minX, minY, maxX, maxY = 0;
+      let difX, difY = 0;
       Get('/messages').then(data => { data.forEach((msg) => {
         try {
           if (minX > msg.pos[0]) minX = msg.pos[0];
@@ -224,7 +225,7 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': message.style.left, 'y': message.style.top}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - minX - difX, 'y': parseInt(message.style.top) - minY - difY}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
@@ -295,6 +296,18 @@
           if (x !== undefined && y !== undefined) {
             element.style.left = `${x - shiftX}px`;
             element.style.top = `${y - shiftY}px`;
+          }
+
+          // features
+          if (parseInt(element.style.left) < 0) { 
+            difX = -1 * parseInt(element.style.left);
+            main.style.left = `${parseInt(main.style.left) + difX}px`;
+            element.style.left = `0px`;
+          }
+          if (parseInt(element.style.top) < 0) { 
+            difY = -1 * parseInt(element.style.top);
+            main.style.top = `${parseInt(main.style.top) + difY}px`;
+            element.style.top = `0px`;
           }
       
           event.preventDefault();
