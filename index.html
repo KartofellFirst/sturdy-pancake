@@ -203,6 +203,9 @@
       const container = document.getElementById('container')
       let minX, minY, maxX, maxY = 0;
       let difX, difY = 0;
+      let totalShiftX = 0;
+      let totalShiftY = 0;
+
       Get('/messages').then(data => { data.forEach((msg) => {
         try {
           if (minX > msg.pos[0]) minX = msg.pos[0];
@@ -233,7 +236,7 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - minX - difX, 'y': parseInt(message.style.top) - minY - difY}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x':parseInt(element.style.left) - minX + totalShiftX, 'y': parseInt(element.style.top) - minY + totalShiftY}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
@@ -307,16 +310,32 @@
           }
 
           // features
-          if (x - shiftX < 0) { 
-            difX = -1 * parseInt(y - shiftY);
-            container.style.left = `${parseInt(container.style.left) + difX}px`;
+          if (x - shiftX < 0) {
+            difX = -(x - shiftX);
+            totalShiftX += difX;
+            container.style.left = `${parseInt(container.style.left || 0) + difX}px`;
             element.style.left = `0px`;
+          } else if (x - shiftX > container.clientWidth - element.offsetWidth) {
+            const extra = (x - shiftX) - (container.clientWidth - element.offsetWidth);
+            totalShiftX -= extra;
+            container.style.left = `${parseInt(container.style.left || 0) - extra}px`;
+            element.style.left = `${container.clientWidth - element.offsetWidth}px`;
           }
-          if (y - shiftY < 0) { 
-            difY = -1 * parseInt(y - shiftY);
-            container.style.top = `${parseInt(container.style.top) + difY}px`;
-            element.style.top = `0px`;      
+
+          if (y - shiftY < 0) {
+            difY = -(y - shiftY);
+            totalShiftY += difY;
+            container.style.top = `${parseInt(container.style.top || 0) + difY}px`;
+            element.style.top = `0px`;
+          } else if (y - shiftY > container.clientHeight - element.offsetHeight) {
+            const extra = (y - shiftY) - (container.clientHeight - element.offsetHeight);
+            totalShiftY -= extra;
+            container.style.top = `${parseInt(container.style.top || 0) - extra}px`;
+            element.style.top = `${container.clientHeight - element.offsetHeight}px`;
           }
+
+          console.log(parseInt(element.style.left) - minX - parseInt(container.style.left));
+          console.log(parseInt(element.style.top) - minY - parseInt(container.style.top));
       
           event.preventDefault();
           event.stopPropagation();
