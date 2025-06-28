@@ -190,7 +190,7 @@
         data.forEach(msg => {
           const message = document.createElement('div');
           let classes;
-          if (new URLSearchParams(location.search).has("id")) classes = (new URLSearchParams(location.search).id == msg.id && msg.pos[0] == null)? ['message', 'vertical-block', 'from-user'] : ['message', 'vertical-block'];
+          if (new URLSearchParams(location.search).has("id")) classes = (new URLSearchParams(location.search).get('id') == msg.id && msg.pos[0] == null)? ['message', 'vertical-block', 'from-user'] : ['message', 'vertical-block'];
           message.classList.add(...classes)
 
           if (classes.includes('from-user')) {
