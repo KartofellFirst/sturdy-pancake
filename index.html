@@ -276,11 +276,14 @@
           document.addEventListener('pointermove', onPointerMove, { passive: false });
           document.addEventListener('pointerup', onPointerUp);
           document.addEventListener('touchend', onPointerUp);
+      
           event.preventDefault();
         };
       
         const onPointerMove = (event) => {
           if (!isDragging) return;
+          event.preventDefault();
+      
           const x = event.clientX ?? event.touches?.[0]?.clientX;
           const y = event.clientY ?? event.touches?.[0]?.clientY;
       
@@ -298,35 +301,36 @@
           document.removeEventListener('pointerup', onPointerUp);
           document.removeEventListener('touchend', onPointerUp);
       
-          let overlapped = false;
           const rect1 = element.getBoundingClientRect();
+          let overlapped = false;
       
           document.querySelectorAll('.message').forEach((msg) => {
             if (msg === element) return;
+      
             const rect2 = msg.getBoundingClientRect();
-            const overlap = !(
+            const isOverlapping = !(
               rect1.right < rect2.left ||
               rect1.left > rect2.right ||
               rect1.bottom < rect2.top ||
               rect1.top > rect2.bottom
             );
-            if (overlap) {
-              msg.classList.add('red-outline');
+      
+            if (isOverlapping) {
               overlapped = true;
-            } else {
-              msg.classList.remove('red-outline');
             }
           });
       
-          if (!overlapped) {
-            document.querySelectorAll('.message.red-outline').forEach(el =>
-              el.classList.remove('red-outline')
-            );
+          // Подсвечиваем только передвигаемый элемент
+          if (overlapped) {
+            element.classList.add('red-outline');
+          } else {
+            element.classList.remove('red-outline');
           }
         };
       
         element.addEventListener('pointerdown', onPointerDown, { passive: false });
       }
+
     </script>
   </body>
 </html>
