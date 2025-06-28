@@ -170,10 +170,21 @@
         position: absolute;
         z-index: 0;
       }
+
+      .frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 2px dashed red;
+        box-sizing: border-box;
+        pointer-events: none;
+      }
     </style>
   </head>
   <body>
-    <div id="container"></div>
+    <div id="container"><div class="frame"></div></div>
     <center><h1>Hello, put your message here:</h1></center>
 <!--      -->
     <main>
@@ -310,34 +321,27 @@
 
           // features
           if (x - shiftX < 0) {
-            console.log(x - shiftX)
             element.style.left = "0px";
             difX = difX > 100 ? difX + 5 : difX + -1 * (x - shiftX);
             container.style.paddingLeft = `${difX}px`;
-            console.log(difX)
           } else if (difX > 0) {
             if (difX - (x - shiftX) < 0) { 
               container.style.paddingLeft = "0px"; 
               element.style.left = `${x - shiftX - difX}px`; 
               difX = 0 
-            } else { difX -= x - shiftX; container.style.paddingLeft = `${difX}px` }
+            } else { difX -= Math.min(x - shiftX, 5); container.style.paddingLeft = `${difX}px` }
           }
           if (y - shiftY < 0) {
-            console.log(y - shiftY)
             element.style.top = "0px";
             difY = difY > 100 ? difY + 5 : difY + -1 * (y - shiftY);
             container.style.paddingTop = `${difY}px`;
-            console.log(difY)
           } else if (difY > 0) {
             if (difY - (y - shiftY) < 0) { 
               container.style.paddingTop = "0px"; 
               element.style.top = `${y - shiftY - difY}px`; 
               difY = 0 
-            } else { difY -= y - shiftY; container.style.paddingTop = `${difY}px` }
+            } else { difY -= Math.min(y - shiftY, 5); container.style.paddingTop = `${difY}px` }
           }
-  
-          // console.log(parseInt(container.style.left) - minX);
-          // console.log(parseInt(container.style.top) - minY);
       
           event.preventDefault();
           event.stopPropagation();
