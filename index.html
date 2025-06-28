@@ -278,12 +278,13 @@
           document.addEventListener('touchend', onPointerUp);
       
           event.preventDefault();
+          event.stopPropagation();
+          document.body.style.touchAction = "none";
         };
       
         const onPointerMove = (event) => {
           if (!isDragging) return;
-          event.preventDefault();
-      
+          
           const x = event.clientX ?? event.touches?.[0]?.clientX;
           const y = event.clientY ?? event.touches?.[0]?.clientY;
       
@@ -293,6 +294,8 @@
           }
       
           event.preventDefault();
+          event.stopPropagation();
+          document.body.style.touchAction = "none";
         };
       
         const onPointerUp = () => {
@@ -318,6 +321,8 @@
             if (isOverlapping) {
               overlapped = true;
             }
+
+            document.body.style.touchAction = "auto";
           });
       
           // Подсвечиваем только передвигаемый элемент
