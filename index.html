@@ -334,8 +334,8 @@
             element.style.top = `${container.clientHeight - element.offsetHeight}px`;
           }
 
-          console.log(parseInt(element.style.left) - minX - parseInt(container.style.left));
-          console.log(parseInt(element.style.top) - minY - parseInt(container.style.top));
+          console.log(parseInt(element.style.left || '0') - minX - parseInt(container.style.leftt || '0'));
+          console.log(parseInt(element.style.topt || '0') - minY - parseInt(container.style.topt || '0'));
       
           event.preventDefault();
           event.stopPropagation();
