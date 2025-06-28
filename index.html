@@ -210,6 +210,7 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
+            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': message.style.left, 'y': message.style.top}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
@@ -265,6 +266,7 @@
         };
       
         const onPointerMove = (event) => {
+          event.stopPropogation();
           const x = event.clientX || event.touches?.[0]?.clientX;
           const y = event.clientY || event.touches?.[0]?.clientY;
           if (x !== undefined && y !== undefined) {
@@ -288,19 +290,13 @@
               rect1.bottom < rect2.top ||
               rect1.top > rect2.bottom
             );
-            if (overlap) {
-              element.classList.add('red-outline');
-              overlapped = true;
-            } else {
-              element.classList.remove('red-outline');
-            }
+            if (overlap) overlapped = true;
           });
       
-          // если ни один не был покрыт, убираем у всех
-          if (!overlapped) {
-            document.querySelector('.message.red-outline').classList.remove('red-outline')
-          }
-        };
+          if (overlapped) element.classList.add('red-outline');  
+          if (!overlapped) element.classList.remove('red-outline');
+        };.
+        
       
         element.addEventListener('pointerdown', onPointerDown);
       }
