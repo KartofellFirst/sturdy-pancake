@@ -315,6 +315,7 @@
             element.style.left = "0px";
             difX += -1 * (x - shiftX)
             container.style.paddingLeft = `${difX}px`;
+            console.log(difX)
           } else if (difX > 0) {
             if (difX - (x - shiftX) < 0) { 
               container.style.paddingLeft = "0px"; 
@@ -327,6 +328,7 @@
             element.style.top = "0px";
             difY += -1 * (y - shiftY)
             container.style.paddingTop = `${difY}px`;
+            console.log(difY)
           } else if (difY > 0) {
             if (difY - (y - shiftY) < 0) { 
               container.style.paddingTop = "0px"; 
