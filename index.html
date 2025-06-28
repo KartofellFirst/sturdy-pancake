@@ -326,7 +326,7 @@
             console.log(y - shiftY)
             element.style.top = "0px";
             difY += -1 * (y - shiftY)
-            container.style.paddingYop = `${difY}px`;
+            container.style.paddingTop = `${difY}px`;
           } else if (difY > 0) {
             if (difY - (y - shiftY) < 0) { 
               container.style.paddingTop = "0px"; 
@@ -335,8 +335,8 @@
             } else { difY -= y - shiftY; container.style.paddingTop = `${difY}px` }
           }
   
-          console.log(parseInt(container.style.left) - minX);
-          console.log(parseInt(container.style.top) - minY);
+          // console.log(parseInt(container.style.left) - minX);
+          // console.log(parseInt(container.style.top) - minY);
       
           event.preventDefault();
           event.stopPropagation();
