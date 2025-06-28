@@ -175,8 +175,6 @@
         position: absolute;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
         border: 2px dashed red;
         box-sizing: border-box;
         pointer-events: none;
@@ -184,7 +182,8 @@
     </style>
   </head>
   <body>
-    <div id="container"><div class="frame"></div></div>
+    <div id="container"></div>
+    <div class="frame"></div>
     <center><h1>Hello, put your message here:</h1></center>
 <!--      -->
     <main>
@@ -226,6 +225,8 @@
 
         container.style.width = `${minX + maxX}px`;
         container.style.height = `${minY + maxY}px`;
+        document.querySelector('.frame').style.width = `${minX + maxX}px`;
+        document.querySelector('.frame').style.height = `${minY + maxY}px`;
         main.style.left = `${minX}px`;
         main.style.top = `${minY}px`;
         main.scrollIntoView({'block': 'center', 'inline': 'center'});
