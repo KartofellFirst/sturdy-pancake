@@ -263,39 +263,46 @@
       function addEventListeners(element) {
         let shiftX = 0;
         let shiftY = 0;
+        let isDragging = false;
       
         const onPointerDown = (event) => {
-          if (event.type === 'touchstart') {
-            shiftX = event.touches[0].clientX - element.offsetLeft;
-            shiftY = event.touches[0].clientY - element.offsetTop;
-          } else {
-            shiftX = event.clientX - element.offsetLeft;
-            shiftY = event.clientY - element.offsetTop;
-          }
+          const clientX = event.clientX ?? event.touches?.[0]?.clientX;
+          const clientY = event.clientY ?? event.touches?.[0]?.clientY;
       
-          document.addEventListener('pointermove', onPointerMove);
+          shiftX = clientX - element.offsetLeft;
+          shiftY = clientY - element.offsetTop;
+          isDragging = true;
+      
+          document.addEventListener('pointermove', onPointerMove, { passive: false });
           document.addEventListener('pointerup', onPointerUp);
+          document.addEventListener('touchend', onPointerUp);
           event.preventDefault();
         };
       
         const onPointerMove = (event) => {
-          event.preventDefault();
-          const x = event.clientX || event.touches?.[0]?.clientX;
-          const y = event.clientY || event.touches?.[0]?.clientY;
+          if (!isDragging) return;
+          const x = event.clientX ?? event.touches?.[0]?.clientX;
+          const y = event.clientY ?? event.touches?.[0]?.clientY;
+      
           if (x !== undefined && y !== undefined) {
-            element.style.left = (x - shiftX) + 'px';
-            element.style.top = (y - shiftY) + 'px';
+            element.style.left = `${x - shiftX}px`;
+            element.style.top = `${y - shiftY}px`;
           }
+      
+          event.preventDefault();
         };
       
         const onPointerUp = () => {
+          isDragging = false;
           document.removeEventListener('pointermove', onPointerMove);
           document.removeEventListener('pointerup', onPointerUp);
+          document.removeEventListener('touchend', onPointerUp);
       
           let overlapped = false;
           const rect1 = element.getBoundingClientRect();
+      
           document.querySelectorAll('.message').forEach((msg) => {
-            if (msg === element) return; // пропустить самого себя
+            if (msg === element) return;
             const rect2 = msg.getBoundingClientRect();
             const overlap = !(
               rect1.right < rect2.left ||
@@ -303,15 +310,22 @@
               rect1.bottom < rect2.top ||
               rect1.top > rect2.bottom
             );
-            if (overlap) overlapped = true;
+            if (overlap) {
+              msg.classList.add('red-outline');
+              overlapped = true;
+            } else {
+              msg.classList.remove('red-outline');
+            }
           });
       
-          if (overlapped) element.classList.add('red-outline');  
-          if (!overlapped) element.classList.remove('red-outline');
+          if (!overlapped) {
+            document.querySelectorAll('.message.red-outline').forEach(el =>
+              el.classList.remove('red-outline')
+            );
+          }
         };
-        
       
-        element.addEventListener('pointerdown', onPointerDown);
+        element.addEventListener('pointerdown', onPointerDown, { passive: false });
       }
     </script>
   </body>
