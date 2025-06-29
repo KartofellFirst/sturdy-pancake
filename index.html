@@ -247,7 +247,7 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x':parseInt(element.style.left) - minX + totalShiftX, 'y': parseInt(element.style.top) - minY + totalShiftY}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x':parseInt(element.style.left) - minX - difX, 'y': parseInt(element.style.top) - minY - difY}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
@@ -332,7 +332,7 @@
               element.style.left = `${x - shiftX - difX}px`; 
               difX = 0 
             } else { difX -= Math.min(x - shiftX, 5); container.style.paddingLeft = `${difX}px` }
-          } else { element.scrollIntoView(); }
+          } else { container.scrollLeft = x - shiftX }
           // y
           if (y - shiftY < 0) {
             element.style.top = "0px";
@@ -344,7 +344,7 @@
               element.style.top = `${y - shiftY - difY}px`; 
               difY = 0 
             } else { difY -= Math.min(y - shiftY, 5); container.style.paddingTop = `${difY}px` }
-          } else { element.scrollIntoView(); }
+          } else { container.scrollTop = y - shiftY }
       
           event.preventDefault();
           event.stopPropagation();
