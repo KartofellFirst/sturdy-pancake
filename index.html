@@ -321,6 +321,7 @@
           }
 
           // features
+          // x
           if (x - shiftX < 0) {
             element.style.left = "0px";
             difX = difX > 100 ? difX + 5 : difX + -1 * (x - shiftX);
@@ -331,7 +332,8 @@
               element.style.left = `${x - shiftX - difX}px`; 
               difX = 0 
             } else { difX -= Math.min(x - shiftX, 5); container.style.paddingLeft = `${difX}px` }
-          }
+          } else { element.scrollIntoView(); }
+          // y
           if (y - shiftY < 0) {
             element.style.top = "0px";
             difY = difY > 100 ? difY + 5 : difY + -1 * (y - shiftY);
@@ -342,7 +344,7 @@
               element.style.top = `${y - shiftY - difY}px`; 
               difY = 0 
             } else { difY -= Math.min(y - shiftY, 5); container.style.paddingTop = `${difY}px` }
-          }
+          } else { element.scrollIntoView(); }
       
           event.preventDefault();
           event.stopPropagation();
