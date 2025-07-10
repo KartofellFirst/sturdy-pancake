@@ -244,8 +244,8 @@
         container.style.height = `${Math.abs(minY) + maxY}px`;
         document.querySelector('.frame').style.width = `${Math.abs(minX) + maxX}px`;
         document.querySelector('.frame').style.height = `${Math.abs(minY) + maxY}px`;
-        document.querySelector('main').style.left = `${minX}px`;
-        document.querySelector('main').style.top = `${minY}px`;
+        document.querySelector('main').style.left = `${Math.abs(minX)}px`;
+        document.querySelector('main').style.top = `${Math.abs(minY)}px`;
         document.querySelector('main').scrollIntoView({'block': 'center', 'inline': 'center'});
       }); spawnMessages(data, {'x': Math.abs(minX), 'y': Math.abs(minY)});}).catch(error => console.error(error))
 
@@ -297,6 +297,7 @@
 
           message.style.left = `${parseInt(msg.pos[0]) > 0? min.x + msg.pos[0] : msg.pos[0]}px`;
           message.style.top = `${parseInt(msg.pos[1]) > 0? min.y + msg.pos[1] : msg.pos[1]}px`;
+          console.log(parseInt(msg.pos[0]), parseInt(msg.pos[1]), msg.id)
           container.appendChild(message);
         })
       }
