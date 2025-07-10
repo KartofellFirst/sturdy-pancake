@@ -264,7 +264,14 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - (min.x + parseInt(container.style.transform.match(/translate\\(([-\\d]+)px,\\s*([-\\d]+)px\\)/)?.[1] || '0')), 'y': parseInt(message.style.top) - (min.y + parseInt(container.style.transform.match(/translate\\(([-\\d]+)px,\\s*([-\\d]+)px\\)/)?.[2] || '0'))}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            // save 
+            const transformMatch = container.style.transform.match(/translate\(([-\d]+)px,\s*([-\d]+)px\)/) || [0, '0', '0'];
+            const shiftX = parseInt(transformMatch[1]);
+            const shiftY = parseInt(transformMatch[2]);
+            const posX = parseInt(message.style.left || '0') - (min.x + shiftX);
+            const posY = parseInt(message.style.top || '0') - (min.y + shiftY);
+            saveBtn.addEventListener('click', () => { console.log(posX, posY)})
+            // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': posX, 'y': posY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
@@ -332,32 +339,50 @@
         const onPointerMove = (event) => {
           if (!isDragging) return;
           
-          const x = event.clientX ?? event.touches?.[0]?.clientX;
-          const y = event.clientY ?? event.touches?.[0]?.clientY;
+          const containerWidth = container.offsetWidth;
+          const containerHeight = container.offsetHeight;
+          const elementWidth = element.offsetWidth;
+          const elementHeight = element.offsetHeight;
+          
+          const rightEdge = containerWidth - elementWidth;
+          const bottomEdge = containerHeight - elementHeight;
+          
+          let offsetX = 0; // сдвиг сцены
+          let offsetY = 0;
           
           const newLeft = x - shiftX;
           const newTop = y - shiftY;
           
-          element.style.left = `${newLeft}px`;
-          element.style.top = `${newTop}px`;
+          let elementLeft = newLeft;
+          let elementTop = newTop;
           
-          // если курсор выходит за левую границу
+          // === Горизонтальное движение ===
           if (newLeft < 0) {
-            const overshootX = -newLeft;
-            offsetX += overshootX;
-            element.style.left = "0px";
+            const overshoot = -newLeft;
+            offsetX += overshoot;
+            elementLeft = 0;
+          } else if (newLeft > rightEdge) {
+            const overshoot = newLeft - rightEdge;
+            offsetX -= overshoot;
+            elementLeft = rightEdge;
           }
           
-          // если выходит за верх
+          // === Вертикальное движение ===
           if (newTop < 0) {
-            const overshootY = -newTop;
-            offsetY += overshootY;
-            element.style.top = "0px";
+            const overshoot = -newTop;
+            offsetY += overshoot;
+            elementTop = 0;
+          } else if (newTop > bottomEdge) {
+            const overshoot = newTop - bottomEdge;
+            offsetY -= overshoot;
+            elementTop = bottomEdge;
           }
           
-          // применяем transform
+          // применяем координаты
+          element.style.left = `${elementLeft}px`;
+          element.style.top = `${elementTop}px`;
           container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-
+          
           // const x = event.clientX ?? event.touches?.[0]?.clientX;
           // const y = event.clientY ?? event.touches?.[0]?.clientY;
           
