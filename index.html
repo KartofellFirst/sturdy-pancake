@@ -235,7 +235,6 @@
       </main2>
     </main>
     <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { if (new URLSearchParams(location.search).has('r')) document.querySelector('main').classList.add('hidden');document.querySelector('main').style.height = "fit-content";document.querySelector('main').style.width = "300px";document.querySelector('main').style.top = "9vh";document.querySelector('main').style.left = "calc(50vw - 150px)"; }</script>
-    <!-- animation --><script>document.addEventListener('scroll', () => { document.querySelector('.from-user').classList.add('dragging');}); document.addEventListener('scrollend', () => { document.querySelector('.from-user').classList.remove('dragging');if (isOverlapped) {document.querySelector('.from-user').classList.add('red-outline');} else {document.querySelector('.from-user').classList.remove('red-outline');}})</script>
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       const container = document.getElementById('container')
@@ -285,13 +284,13 @@
             // const shiftY = parseInt(match[2] ?? '0');
             // const posX = parseInt(message.style.left || '0') - (min.x + shiftX);
             // const posY = parseInt(message.style.top || '0') - (min.y + shiftY);
-            const rect = message.getBoundingClientRect();
+            const rect = document.querySelector('.from-user').getBoundingClientRect();
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-            
+          
             const absoluteTop = rect.top + scrollTop;
             const absoluteLeft = rect.left + scrollLeft;
-            saveBtn.addEventListener('click', () => { console.log(absoluteTop - minX, absoluteLeft - minY)})
+            saveBtn.addEventListener('click', () => { console.log(absoluteTop + minX, absoluteLeft + minY)})
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': posX, 'y': posY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
@@ -473,7 +472,7 @@
           document.removeEventListener('touchend', onPointerUp);
     
           // Подсвечиваем только передвигаемый элемент
-          if (isOverlapped()) {
+          if (isOverlapped(element)) {
             element.classList.add('red-outline');
           } else {
             element.classList.remove('red-outline');
@@ -481,11 +480,23 @@
         };
       
         element.addEventListener('pointerdown', onPointerDown, { passive: false });
+
+        document.addEventListener('scroll', () => {
+          element.classList.add('dragging');
+        })
+        
+        document.addEventListener('scrollend', () => {
+          element.classList.remove('dragging');
+          if (isOverlapped(element)) {
+            element.classList.add('red-outline');
+          } else {
+            element.classList.remove('red-outline');
+          }
+        })
       }
 
-
-      function isOverlapped() {
-        const element = document.querySelector('.from-user');
+      
+      function isOverlapped(element) {
         const rect1 = element.getBoundingClientRect();
         let overlapped = false;
     
@@ -499,16 +510,15 @@
             rect1.bottom < rect2.top ||
             rect1.top > rect2.bottom
           );
-    
+          
+          document.body.style.touchAction = "auto";
+          element.style.touchAction = "auto";
+          
           if (isOverlapping) {
             return true;
           }
-
-          document.body.style.touchAction = "auto";
-          element.style.touchAction = "auto";
         });
         return false;
-      
       }
     </script>
   </body>
