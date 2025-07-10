@@ -349,7 +349,7 @@
               element.style.left = `${x - shiftX - difX}px`; 
               difX = 0 
             } else { difX -= Math.min(x - shiftX, 5); container.style.paddingLeft = `${difX}px` }
-          } else { window.scrollTo(x - shiftX, 0) }
+          }// else { window.scrollTo(x - shiftX, 0) }
           // y
           if (y - shiftY < 0) {
             element.style.top = "0px";
@@ -361,7 +361,7 @@
               element.style.top = `${y - shiftY - difY}px`; 
               difY = 0 
             } else { difY -= Math.min(y - shiftY, 5); container.style.paddingTop = `${difY}px` }
-          } else { window.scrollTo(0, y - shiftY) }
+          }// else { window.scrollTo(0, y - shiftY) }
       
           event.preventDefault();
           event.stopPropagation();
