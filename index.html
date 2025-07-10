@@ -325,10 +325,13 @@
           date.textContent = msg.date;
           message.appendChild(date)
 
-          message.style.left = `${min.x + msg.pos[0]}px`;
-          message.style.top = `${min.y + msg.pos[1]}px`;
-
-          classes.includes('from-user')? document.body.appendChild(message) : container.appendChild(message);
+          if (classes.includes('from-user')) { 
+            document.body.appendChild(message) 
+          } else { 
+            container.appendChild(message);
+            message.style.left = `${min.x + msg.pos[0]}px`;
+            message.style.top = `${min.y + msg.pos[1]}px`;
+          }
         })
       }
 
