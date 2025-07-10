@@ -485,29 +485,33 @@
 
 
       function isOverlapped() {
-        const rect1 = element.getBoundingClientRect();
-        let overlapped = false;
-    
-        document.querySelectorAll('.message').forEach((msg) => {
-          if (msg === element) return;
-    
-          const rect2 = msg.getBoundingClientRect();
-          const isOverlapping = !(
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom
-          );
-    
-          if (isOverlapping) {
-            return true;
-          }
-
-          document.body.style.touchAction = "auto";
-          element.style.touchAction = "auto";
-        });
-        return false;
+        const element = document.querySelector('.from-user');
+        if (element) {
+          const rect1 = element.getBoundingClientRect();
+          let overlapped = false;
+      
+          document.querySelectorAll('.message').forEach((msg) => {
+            if (msg === element) return;
+      
+            const rect2 = msg.getBoundingClientRect();
+            const isOverlapping = !(
+              rect1.right < rect2.left ||
+              rect1.left > rect2.right ||
+              rect1.bottom < rect2.top ||
+              rect1.top > rect2.bottom
+            );
+      
+            if (isOverlapping) {
+              return true;
+            }
+  
+            document.body.style.touchAction = "auto";
+            element.style.touchAction = "auto";
+          });
+          return false;
+        }
       }
+      return false;
     </script>
   </body>
 </html>
