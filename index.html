@@ -235,7 +235,7 @@
       </main2>
     </main>
     <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { if (new URLSearchParams(location.search).has('r')) document.querySelector('main').classList.add('hidden');document.querySelector('main').style.height = "fit-content";document.querySelector('main').style.width = "300px";document.querySelector('main').style.top = "9vh";document.querySelector('main').style.left = "calc(50vw - 150px)"; }</script>
-    <!-- animation --><script>document.addEventListener('scroll', () => { document.querySelector('.from-user').classList.add('dragging');}); document.addEventListener('scrollend', () => { document.querySelector('.from-user').classList.remove('dragging');if (isOverlapped) {document.querySelector('.from-user').classList.add('red-outline');} else {document.querySelector('.from-user').classList.remove('red-outline');}});</script>
+    <!-- animation --><script>if (document.querySelector('.from-user') !== null) { document.addEventListener('scroll', () => { document.querySelector('.from-user').classList.add('dragging');}); document.addEventListener('scrollend', () => { document.querySelector('.from-user').classList.remove('dragging');if (isOverlapped) {document.querySelector('.from-user').classList.add('red-outline');} else {document.querySelector('.from-user').classList.remove('red-outline');}});}</script>
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       const container = document.getElementById('container')
