@@ -184,8 +184,7 @@
     </style>
   </head>
   <body>
-    <div id="container"></div>
-    <div class="frame"></div>
+    <div id="container"><div class="frame"></div></div>
 <!--      -->
     <main>
       <main1 class="hidden">
@@ -304,7 +303,8 @@
 
           message.style.left = `${min.x + msg.pos[0]}px`;
           message.style.top = `${min.y + msg.pos[1]}px`;
-          container.appendChild(message);
+
+          classes.includes('from-user')? document.body.appendChild(message) : container.appendChild(message);
         })
       }
 
