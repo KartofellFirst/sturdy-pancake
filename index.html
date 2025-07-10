@@ -360,8 +360,8 @@
       
           event.preventDefault();
           event.stopPropagation();
-          document.body.style.touchAction = "none";
-          element.style.touchAction = "none";
+          // document.body.style.touchAction = "none";
+          // element.style.touchAction = "none";
         };
       
         const onPointerMove = (event) => {
@@ -465,8 +465,8 @@
       
           event.preventDefault();
           event.stopPropagation();
-          document.body.style.touchAction = "none";
-          element.style.touchAction = "none";
+          // document.body.style.touchAction = "none";
+          // element.style.touchAction = "none";
         };
       
         const onPointerUp = () => {
@@ -474,7 +474,6 @@
           isDragging = false;
           document.removeEventListener('pointermove', onPointerMove);
           document.removeEventListener('pointerup', onPointerUp);
-          document.removeEventListener('touchend', onPointerUp);
     
           // Подсвечиваем только передвигаемый элемент
           if (isOverlapped(element)) {
