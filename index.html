@@ -263,9 +263,10 @@
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
             // save 
-            const transformMatch = container.style.transform.match(/translate\(([-\d]+)px,\s*([-\d]+)px\)/) || [0, '0', '0'];
-            const shiftX = parseInt(transformMatch[1]);
-            const shiftY = parseInt(transformMatch[2]);
+            // const transformMatch = container.style.transform.match(/translate\(([-\d]+)px,\s*([-\d]+)px\)/) || [0, '0', '0'];
+            const match = container.style.transform.match(/translate\(([-\d]+)px(?:,\s*([-\d]+)px)?\)/) || [0, '0', '0'];
+            const shiftX = parseInt(match[1] ?? '0');
+            const shiftY = parseInt(match[2] ?? '0');
             const posX = parseInt(message.style.left || '0') - (min.x + shiftX);
             const posY = parseInt(message.style.top || '0') - (min.y + shiftY);
             saveBtn.addEventListener('click', () => { console.log(posX, posY)})
