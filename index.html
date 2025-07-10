@@ -151,6 +151,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 2;
       }
       
       .icon-btn:hover {
@@ -220,11 +221,14 @@
         </div>
       </main2>
     </main>
-    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { document.querySelector('#startMg').classList.add('hidden');document.querySelector('main').style.height = "fit-content";document.querySelector('main').style.width = "300px";document.querySelector('main').style.top = "9vh";document.querySelector('main').style.left = "calc(50vw - 150px)"; }</script>
+    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { if (new URLSearchParams(location.search).has('r')) document.querySelector('main').classList.add('hidden');document.querySelector('#startMg').classList.add('hidden');document.querySelector('main').style.height = "fit-content";document.querySelector('main').style.width = "300px";document.querySelector('main').style.top = "9vh";document.querySelector('main').style.left = "calc(50vw - 150px)"; }</script>
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       const container = document.getElementById('container')
-      let minX, minY, maxX, maxY = 0;
+      let minX = 0; 
+      let minY = 0; 
+      let maxX = 0; 
+      let maxY = 0;
       let difX = 0;
       let difY = 0;
 
@@ -260,7 +264,7 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - minX - difX, 'y': parseInt(message.style.top) - minY - difY}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - minX - difX, 'y': parseInt(message.style.top) - minY - difY}).then(data => window.location.href="/?r").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
