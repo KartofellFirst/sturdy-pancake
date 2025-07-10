@@ -186,7 +186,6 @@
   <body>
     <div id="container"></div>
     <div class="frame"></div>
-<!--     <center><h1 id="startMg">Hello, put your message here:</h1></center> -->
 <!--      -->
     <main>
       <main1 class="hidden">
@@ -221,7 +220,7 @@
         </div>
       </main2>
     </main>
-    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { if (new URLSearchParams(location.search).has('r')) document.querySelector('main').classList.add('hidden');document.querySelector('#startMg').classList.add('hidden');document.querySelector('main').style.height = "fit-content";document.querySelector('main').style.width = "300px";document.querySelector('main').style.top = "9vh";document.querySelector('main').style.left = "calc(50vw - 150px)"; }</script>
+    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { if (new URLSearchParams(location.search).has('r')) document.querySelector('main').classList.add('hidden');document.querySelector('main').style.height = "fit-content";document.querySelector('main').style.width = "300px";document.querySelector('main').style.top = "9vh";document.querySelector('main').style.left = "calc(50vw - 150px)"; }</script>
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       const container = document.getElementById('container')
