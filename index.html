@@ -197,7 +197,6 @@
               <span class="slider round"></span>
             </label>
           </div>
-      
             <div class="message-input no-sign"><textarea onfocusout="this.parentElement.classList.remove('focus')" onfocus="this.parentElement.classList.add('focus')" id="message-area" style="width: 100%;" name="message-text"></textarea></div>
             <div class="horizontal-block hidden sign"><h6>~</h6><input style="width: 10px;" name="message-author" id="name-input" oninput="resize()" value="Name"></div>
         </form>
@@ -261,7 +260,7 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x':parseInt(element.style.left) - minX - difX, 'y': parseInt(element.style.top) - minY - difY}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - minX - difX, 'y': parseInt(message.style.top) - minY - difY}).then(data => window.location.reload()).catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
