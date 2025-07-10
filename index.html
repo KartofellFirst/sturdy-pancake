@@ -244,10 +244,10 @@
         container.style.height = `${minY + maxY}px`;
         document.querySelector('.frame').style.width = `${minX + maxX}px`;
         document.querySelector('.frame').style.height = `${minY + maxY}px`;
-        main.style.left = `${minX}px`;
-        main.style.top = `${minY}px`;
+        // main.style.left = `${minX}px`;
+        // main.style.top = `${minY}px`;
         main.scrollIntoView({'block': 'center', 'inline': 'center'});
-      }); spawnMessages(data, {'x': minX, 'y': minY});}).catch(error => console.error(error))
+      }); spawnMessages(data, {'x': Math.abs(minX), 'y': Math.abs(minY)});}).catch(error => console.error(error))
 
       function spawnMessages(data, min) {
         data.forEach(msg => {
@@ -264,7 +264,7 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - minX - difX, 'y': parseInt(message.style.top) - minY - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
