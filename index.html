@@ -186,8 +186,6 @@
         z-index: 0;
         left: 500px;
         top: 500px;
-        margin-right: 500px;
-        margin-bottom: 500px;
       }
 
       .frame {
@@ -255,8 +253,8 @@
           if (maxY < msg.pos[1]) maxY = msg.pos[1];
         } catch { console.log(`message has not positioned. id: ${msg.id}`) }
 
-        container.style.width = `${Math.abs(minX) + maxX}px`;
-        container.style.height = `${Math.abs(minY) + maxY}px`;
+        container.style.width = `${Math.abs(minX) + maxX + 800}px`;
+        container.style.height = `${Math.abs(minY) + maxY + 900}px`;
         document.querySelector('.frame').style.width = `${Math.abs(minX) + maxX + 300}px`;
         document.querySelector('.frame').style.height = `${Math.abs(minY) + maxY + 400}px`;
         document.querySelector('main').style.left = `${Math.abs(minX)}px`;
@@ -281,12 +279,18 @@
             saveBtn.textContent = '✔️';
             // save 
             // const transformMatch = container.style.transform.match(/translate\(([-\d]+)px,\s*([-\d]+)px\)/) || [0, '0', '0'];
-            const match = container.style.transform.match(/translate\(([-\d]+)px(?:,\s*([-\d]+)px)?\)/) || [0, '0', '0'];
-            const shiftX = parseInt(match[1] ?? '0');
-            const shiftY = parseInt(match[2] ?? '0');
-            const posX = parseInt(message.style.left || '0') - (min.x + shiftX);
-            const posY = parseInt(message.style.top || '0') - (min.y + shiftY);
-            saveBtn.addEventListener('click', () => { console.log(posX, posY)})
+            // const match = container.style.transform.match(/translate\(([-\d]+)px(?:,\s*([-\d]+)px)?\)/) || [0, '0', '0'];
+            // const shiftX = parseInt(match[1] ?? '0');
+            // const shiftY = parseInt(match[2] ?? '0');
+            // const posX = parseInt(message.style.left || '0') - (min.x + shiftX);
+            // const posY = parseInt(message.style.top || '0') - (min.y + shiftY);
+            const rect = message.getBoundingClientRect();
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+            
+            const absoluteTop = rect.top + scrollTop;
+            const absoluteLeft = rect.left + scrollLeft;
+            saveBtn.addEventListener('click', () => { console.log(absoluteTop, absoluteLeft)})
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': posX, 'y': posY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
@@ -365,7 +369,7 @@
           const height = window.innerHeight;
 
           let dX = x - shiftX;
-          let xY = y - shiftY;
+          let dY = y - shiftY;
 
           dX = dX > width? width : dY;
           dY = dY > height? height : dY;
