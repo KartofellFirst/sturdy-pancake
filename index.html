@@ -114,6 +114,19 @@
         box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         overflow: hidden;
         min-width: 200px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .message.dragging {
+        transform: scale(1.03) translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: grabbing;
+        z-index: 1000;
+      }
+
+      .message.from-user {
+        position: fixed;
       }
       
       .msg-text {
@@ -171,6 +184,10 @@
         display: block; 
         position: absolute;
         z-index: 0;
+        left: 500px;
+        top: 500px;
+        margin-right: 500px;
+        margin-bottom: 500px;
       }
 
       .frame {
@@ -325,7 +342,9 @@
           shiftX = clientX - element.offsetLeft;
           shiftY = clientY - element.offsetTop;
           isDragging = true;
-      
+
+          element.classList.add('dragging');
+          
           document.addEventListener('pointermove', onPointerMove, { passive: false });
           document.addEventListener('pointerup', onPointerUp);
           document.addEventListener('touchend', onPointerUp);
@@ -341,50 +360,65 @@
 
           const x = event.clientX ?? event.touches?.[0]?.clientX;
           const y = event.clientY ?? event.touches?.[0]?.clientY;
+
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+
+          let dX = x - shiftX;
+          let xY = y - shiftY;
+
+          dX = dX > width? width : dY;
+          dY = dY > height? height : dY;
+
+          element.style.left = `${dX < 0? 0 : dX}px`;
+          element.style.top = `${dY < 0? 0 : dY}px`;
+
+          // const x = event.clientX ?? event.touches?.[0]?.clientX;
+          // const y = event.clientY ?? event.touches?.[0]?.clientY;
           
-          const containerWidth = container.offsetWidth;
-          const containerHeight = container.offsetHeight;
-          const elementWidth = element.offsetWidth;
-          const elementHeight = element.offsetHeight;
+          // const containerWidth = container.offsetWidth;
+          // const containerHeight = container.offsetHeight;
+          // const elementWidth = element.offsetWidth;
+          // const elementHeight = element.offsetHeight;
           
-          const rightEdge = containerWidth - elementWidth;
-          const bottomEdge = containerHeight - elementHeight;
+          // const rightEdge = containerWidth - elementWidth;
+          // const bottomEdge = containerHeight - elementHeight;
           
-          let offsetX = 0; // сдвиг сцены
-          let offsetY = 0;
+          // let offsetX = 0; // сдвиг сцены
+          // let offsetY = 0;
           
-          const newLeft = x - shiftX;
-          const newTop = y - shiftY;
+          // const newLeft = x - shiftX;
+          // const newTop = y - shiftY;
           
-          let elementLeft = newLeft;
-          let elementTop = newTop;
+          // let elementLeft = newLeft;
+          // let elementTop = newTop;
           
-          // === Горизонтальное движение ===
-          if (newLeft < 0) {
-            const overshoot = -newLeft;
-            offsetX += overshoot;
-            elementLeft = 0;
-          } else if (newLeft > rightEdge) {
-            const overshoot = newLeft - rightEdge;
-            offsetX -= overshoot;
-            elementLeft = rightEdge;
-          }
+          // // === Горизонтальное движение ===
+          // if (newLeft < 0) {
+          //   const overshoot = -newLeft;
+          //   offsetX += overshoot;
+          //   elementLeft = 0;
+          // } else if (newLeft > rightEdge) {
+          //   const overshoot = newLeft - rightEdge;
+          //   offsetX -= overshoot;
+          //   elementLeft = rightEdge;
+          // }
           
-          // === Вертикальное движение ===
-          if (newTop < 0) {
-            const overshoot = -newTop;
-            offsetY += overshoot;
-            elementTop = 0;
-          } else if (newTop > bottomEdge) {
-            const overshoot = newTop - bottomEdge;
-            offsetY -= overshoot;
-            elementTop = bottomEdge;
-          }
+          // // === Вертикальное движение ===
+          // if (newTop < 0) {
+          //   const overshoot = -newTop;
+          //   offsetY += overshoot;
+          //   elementTop = 0;
+          // } else if (newTop > bottomEdge) {
+          //   const overshoot = newTop - bottomEdge;
+          //   offsetY -= overshoot;
+          //   elementTop = bottomEdge;
+          // }
           
-          // применяем координаты
-          element.style.left = `${elementLeft}px`;
-          element.style.top = `${elementTop}px`;
-          container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+          // // применяем координаты
+          // element.style.left = `${elementLeft}px`;
+          // element.style.top = `${elementTop}px`;
+          // container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
           
           // const x = event.clientX ?? event.touches?.[0]?.clientX;
           // const y = event.clientY ?? event.touches?.[0]?.clientY;
@@ -427,6 +461,7 @@
         };
       
         const onPointerUp = () => {
+          element.classList.remove('dragging');
           isDragging = false;
           document.removeEventListener('pointermove', onPointerMove);
           document.removeEventListener('pointerup', onPointerUp);
