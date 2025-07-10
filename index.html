@@ -253,7 +253,7 @@
         data.forEach(msg => {
           const message = document.createElement('div');
           let classes;
-          if (new URLSearchParams(location.search).has("id")) classes = (new URLSearchParams(location.search).get('id') == msg.id && msg.pos[0] == null)? ['message', 'vertical-block', 'from-user'] : ['message', 'vertical-block'];
+          if (new URLSearchParams(location.search).has("id")) { classes = (new URLSearchParams(location.search).get('id') == msg.id && msg.pos[0] == null)? ['message', 'vertical-block', 'from-user'] : ['message', 'vertical-block']; } else { classes = ['message', 'vertical-block'] }
           message.classList.add(...classes)
 
           if (classes.includes('from-user')) {
@@ -264,7 +264,7 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - minX - difX, 'y': parseInt(message.style.top) - minY - difY}).then(data => window.location.href="/?r").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - minX - difX, 'y': parseInt(message.style.top) - minY - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
