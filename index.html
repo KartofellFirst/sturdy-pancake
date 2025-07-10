@@ -221,7 +221,7 @@
         </div>
       </main2>
     </main>
-    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { document.querySelector('#startMg').classList.add('hidden');document.querySelector('main').style.height = "auto"; }</script>
+    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { document.querySelector('#startMg').classList.add('hidden');document.querySelector('main').style.height = "auto";document.querySelector('main').style.aspectRatio = "1/2";document.querySelector('main').style.top = "12.5vh"; }</script>
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       const container = document.getElementById('container')
