@@ -371,8 +371,8 @@
           let dX = x - shiftX;
           let dY = y - shiftY;
 
-          dX = dX > width? width : dY;
-          dY = dY > height? height : dY;
+          dX = Math.max(0, Math.min(dX, width));
+          dY = Math.max(0, Math.min(dY, height));
 
           element.style.left = `${dX < 0? 0 : dX}px`;
           element.style.top = `${dY < 0? 0 : dY}px`;
