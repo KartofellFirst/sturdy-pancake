@@ -338,6 +338,9 @@
       
         const onPointerMove = (event) => {
           if (!isDragging) return;
+
+          const x = event.clientX ?? event.touches?.[0]?.clientX;
+          const y = event.clientY ?? event.touches?.[0]?.clientY;
           
           const containerWidth = container.offsetWidth;
           const containerHeight = container.offsetHeight;
