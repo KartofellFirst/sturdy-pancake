@@ -481,28 +481,42 @@
       
         element.addEventListener('pointerdown', onPointerDown, { passive: false });
 
+        let scrollTimeout;
         document.addEventListener('scroll', () => {
           element.classList.add('dragging');
-        })
+          
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            element.classList.remove('dragging');
+            if (isOverlapped(element)) {
+              element.classList.add('red-outline');
+            } else {
+              element.classList.remove('red-outline');
+            }
+          }, 150); // задержка в мс
+        });
+        // document.addEventListener('scroll', () => {
+        //   element.classList.add('dragging');
+        // })
         
-        document.addEventListener('scrollend', () => {
-          element.classList.remove('dragging');
-          if (isOverlapped(element)) {
-            element.classList.add('red-outline');
-          } else {
-            element.classList.remove('red-outline');
-          }
-        })
+        // document.addEventListener('scrollend', () => {
+        //   element.classList.remove('dragging');
+        //   if (isOverlapped(element)) {
+        //     element.classList.add('red-outline');
+        //   } else {
+        //     element.classList.remove('red-outline');
+        //   }
+        // })
       }
 
       
       function isOverlapped(element) {
         const rect1 = element.getBoundingClientRect();
-        let overlapped = false;
-    
-        document.querySelectorAll('.message').forEach((msg) => {
-          if (msg === element) return;
-    
+        const others = document.querySelectorAll('.message');
+      
+        for (const msg of others) {
+          if (msg === element) continue;
+      
           const rect2 = msg.getBoundingClientRect();
           const isOverlapping = !(
             rect1.right < rect2.left ||
@@ -510,16 +524,12 @@
             rect1.bottom < rect2.top ||
             rect1.top > rect2.bottom
           );
-          
-          document.body.style.touchAction = "auto";
-          element.style.touchAction = "auto";
-          
-          if (isOverlapping) {
-            return true;
-          }
-        });
+      
+          if (isOverlapping) return true;
+        }
         return false;
       }
+
     </script>
   </body>
 </html>
