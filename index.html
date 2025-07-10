@@ -258,8 +258,8 @@
         container.style.height = `${Math.abs(minY) + maxY + 900}px`;
         document.querySelector('.frame').style.width = `${Math.abs(minX) + maxX + 300}px`;
         document.querySelector('.frame').style.height = `${Math.abs(minY) + maxY + 400}px`;
-        document.querySelector('main').style.left = `${Math.abs(minX)}px`;
-        document.querySelector('main').style.top = `${Math.abs(minY)}px`;
+        document.querySelector('main').style.left = `${Math.abs(minX) + 500}px`;
+        document.querySelector('main').style.top = `${Math.abs(minY) + 500}px`;
         document.querySelector('main').scrollIntoView({'block': 'center', 'inline': 'center'});
       }); spawnMessages(data, {'x': Math.abs(minX), 'y': Math.abs(minY)});}).catch(error => console.error(error))
 
@@ -510,8 +510,8 @@
           });
           return false;
         }
-      }
       return false;
+      }
     </script>
   </body>
 </html>
