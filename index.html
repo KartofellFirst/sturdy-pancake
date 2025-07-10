@@ -284,7 +284,7 @@
             // const shiftY = parseInt(match[2] ?? '0');
             // const posX = parseInt(message.style.left || '0') - (min.x + shiftX);
             // const posY = parseInt(message.style.top || '0') - (min.y + shiftY);
-            const rect = document.querySelector('.from-user').getBoundingClientRect();
+            const rect = message.getBoundingClientRect();
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
           
