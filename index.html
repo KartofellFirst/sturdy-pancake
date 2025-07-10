@@ -185,7 +185,7 @@
   <body>
     <div id="container"></div>
     <div class="frame"></div>
-    <center><h1>Hello, put your message here:</h1></center>
+    <center><h1 id="startMg">Hello, put your message here:</h1></center>
 <!--      -->
     <main>
       <main1 class="hidden">
@@ -205,10 +205,23 @@
       </main1>
 <!--        -->
       <main2 class="hidden">
-        test
+        <div class="vertical-block">
+          <h3>Instructions</h3><br>
+          <i>Now you need to place your message here, here a few things you need to know: ^^</i>
+          <div class="vertical-block">
+            <span>If you want to edit message, click on "🗑" button and rewrite it.</span>
+            <hr>
+            <span>For move your message just hold and drag it where you want it to be.</span>
+            <hr>
+            <span>After you remove your cursor/finger, you can click on "✔️" button for put message here (cannot be canceled)</span>
+            <hr>
+            <span>If your message have red light on its sides, it means you overlapped someone message, overlap is forbidden! Then, please, choose another place</span>
+          </div>
+          <button onclick="document.querySelector('main2').classList.add('hidden');">close</button>
+        </div>
       </main2>
     </main>
-    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) document.querySelector('main').classList.add('hidden')</script>
+    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) document.querySelector('#startMg').classList.add('hidden')</script>
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       const container = document.getElementById('container')
