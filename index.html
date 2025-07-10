@@ -240,13 +240,13 @@
           if (maxY < msg.pos[1]) maxY = msg.pos[1];
         } catch { console.log(`message has not positioned. id: ${msg.id}`) }
 
-        container.style.width = `${minX + maxX}px`;
-        container.style.height = `${minY + maxY}px`;
+        container.style.width = `${Math.abs(minX) + maxX}px`;
+        container.style.height = `${Math.abs(minY) + maxY}px`;
         document.querySelector('.frame').style.width = `${minX + maxX}px`;
         document.querySelector('.frame').style.height = `${minY + maxY}px`;
-        // main.style.left = `${minX}px`;
-        // main.style.top = `${minY}px`;
-        main.scrollIntoView({'block': 'center', 'inline': 'center'});
+        document.querySelector('main').style.left = `${minX}px`;
+        document.querySelector('main').style.top = `${minY}px`;
+        document.querySelector('main').scrollIntoView({'block': 'center', 'inline': 'center'});
       }); spawnMessages(data, {'x': Math.abs(minX), 'y': Math.abs(minY)});}).catch(error => console.error(error))
 
       function spawnMessages(data, min) {
