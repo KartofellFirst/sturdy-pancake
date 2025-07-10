@@ -286,13 +286,15 @@
             // const shiftY = parseInt(match[2] ?? '0');
             // const posX = parseInt(message.style.left || '0') - (min.x + shiftX);
             // const posY = parseInt(message.style.top || '0') - (min.y + shiftY);
-            const rect = message.getBoundingClientRect();
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-          
-            const absoluteTop = rect.top + scrollTop;
-            const absoluteLeft = rect.left + scrollLeft;
-            saveBtn.addEventListener('click', () => { console.log(absoluteTop + minX, absoluteLeft + minY)})
+            saveBtn.addEventListener('click', () => {
+              const rect = message.getBoundingClientRect();
+              const scrollTop = window.pageYOffset;
+              const scrollLeft = window.pageXOffset;           
+              const absoluteTop = rect.top + scrollTop;
+              const absoluteLeft = rect.left + scrollLeft;
+            
+              console.log(absoluteLeft + minX, absoluteTop + minY);
+            });
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': posX, 'y': posY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
