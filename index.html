@@ -235,6 +235,7 @@
       </main2>
     </main>
     <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { if (new URLSearchParams(location.search).has('r')) document.querySelector('main').classList.add('hidden');document.querySelector('main').style.height = "fit-content";document.querySelector('main').style.width = "300px";document.querySelector('main').style.top = "9vh";document.querySelector('main').style.left = "calc(50vw - 150px)"; }</script>
+    <!-- animation --><script>document.addEventListener('scroll', () => { document.querySelector('.from-user').classList.add('dragging');}); document.addEventListener('scrollend', () => { document.querySelector('.from-user').classList.remove('dragging');if (isOverlapped) {element.classList.add('red-outline');} else {element.classList.remove('red-outline');}});</script>
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       const container = document.getElementById('container')
@@ -290,7 +291,7 @@
             
             const absoluteTop = rect.top + scrollTop;
             const absoluteLeft = rect.left + scrollLeft;
-            saveBtn.addEventListener('click', () => { console.log(absoluteTop, absoluteLeft)})
+            saveBtn.addEventListener('click', () => { console.log(absoluteTop - minX, absoluteLeft - minY)})
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': posX, 'y': posY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
@@ -470,31 +471,9 @@
           document.removeEventListener('pointermove', onPointerMove);
           document.removeEventListener('pointerup', onPointerUp);
           document.removeEventListener('touchend', onPointerUp);
-      
-          const rect1 = element.getBoundingClientRect();
-          let overlapped = false;
-      
-          document.querySelectorAll('.message').forEach((msg) => {
-            if (msg === element) return;
-      
-            const rect2 = msg.getBoundingClientRect();
-            const isOverlapping = !(
-              rect1.right < rect2.left ||
-              rect1.left > rect2.right ||
-              rect1.bottom < rect2.top ||
-              rect1.top > rect2.bottom
-            );
-      
-            if (isOverlapping) {
-              overlapped = true;
-            }
-
-            document.body.style.touchAction = "auto";
-            element.style.touchAction = "auto";
-          });
-      
+    
           // Подсвечиваем только передвигаемый элемент
-          if (overlapped) {
+          if (isOverlapped()) {
             element.classList.add('red-outline');
           } else {
             element.classList.remove('red-outline');
@@ -504,6 +483,31 @@
         element.addEventListener('pointerdown', onPointerDown, { passive: false });
       }
 
+
+      function isOverlapped() {
+        const rect1 = element.getBoundingClientRect();
+        let overlapped = false;
+    
+        document.querySelectorAll('.message').forEach((msg) => {
+          if (msg === element) return;
+    
+          const rect2 = msg.getBoundingClientRect();
+          const isOverlapping = !(
+            rect1.right < rect2.left ||
+            rect1.left > rect2.right ||
+            rect1.bottom < rect2.top ||
+            rect1.top > rect2.bottom
+          );
+    
+          if (isOverlapping) {
+            return true;
+          }
+
+          document.body.style.touchAction = "auto";
+          element.style.touchAction = "auto";
+        });
+        return false;
+      }
     </script>
   </body>
 </html>
