@@ -295,8 +295,8 @@
           date.textContent = msg.date;
           message.appendChild(date)
 
-          message.style.left = msg.pos[0] > 0? min.x + msg.pos[0] : msg.pos[0];
-          message.style.top = msg.pos[1] > 0? min.y + msg.pos[1] : msg.pos[1];
+          message.style.left = `${msg.pos[0] > 0? min.x + msg.pos[0] : msg.pos[0]}px`;
+          message.style.top = `${msg.pos[1] > 0? min.y + msg.pos[1] : msg.pos[1]}px`;
           container.appendChild(message);
         })
       }
