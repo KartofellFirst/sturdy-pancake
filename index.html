@@ -242,8 +242,8 @@
 
         container.style.width = `${Math.abs(minX) + maxX}px`;
         container.style.height = `${Math.abs(minY) + maxY}px`;
-        document.querySelector('.frame').style.width = `${minX + maxX}px`;
-        document.querySelector('.frame').style.height = `${minY + maxY}px`;
+        document.querySelector('.frame').style.width = `${Math.abs(minX) + maxX}px`;
+        document.querySelector('.frame').style.height = `${Math.abs(minY) + maxY}px`;
         document.querySelector('main').style.left = `${minX}px`;
         document.querySelector('main').style.top = `${minY}px`;
         document.querySelector('main').scrollIntoView({'block': 'center', 'inline': 'center'});
@@ -295,8 +295,8 @@
           date.textContent = msg.date;
           message.appendChild(date)
 
-          message.style.left = `${msg.pos[0] > 0? min.x + msg.pos[0] : msg.pos[0]}px`;
-          message.style.top = `${msg.pos[1] > 0? min.y + msg.pos[1] : msg.pos[1]}px`;
+          message.style.left = `${parseInt(msg.pos[0]) > 0? min.x + msg.pos[0] : msg.pos[0]}px`;
+          message.style.top = `${parseInt(msg.pos[1]) > 0? min.y + msg.pos[1] : msg.pos[1]}px`;
           container.appendChild(message);
         })
       }
