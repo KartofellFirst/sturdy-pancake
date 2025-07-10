@@ -186,7 +186,7 @@
   <body>
     <div id="container"></div>
     <div class="frame"></div>
-    <center><h1 id="startMg">Hello, put your message here:</h1></center>
+<!--     <center><h1 id="startMg">Hello, put your message here:</h1></center> -->
 <!--      -->
     <main>
       <main1 class="hidden">
@@ -242,8 +242,8 @@
 
         container.style.width = `${Math.abs(minX) + maxX}px`;
         container.style.height = `${Math.abs(minY) + maxY}px`;
-        document.querySelector('.frame').style.width = `${Math.abs(minX) + maxX}px`;
-        document.querySelector('.frame').style.height = `${Math.abs(minY) + maxY}px`;
+        document.querySelector('.frame').style.width = `${Math.abs(minX) + maxX + 300}px`;
+        document.querySelector('.frame').style.height = `${Math.abs(minY) + maxY + 400}px`;
         document.querySelector('main').style.left = `${Math.abs(minX)}px`;
         document.querySelector('main').style.top = `${Math.abs(minY)}px`;
         document.querySelector('main').scrollIntoView({'block': 'center', 'inline': 'center'});
@@ -264,7 +264,8 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - (min.x + parseInt(container.style.transform.match(/translate\\(([-\\d]+)px,\\s*([-\\d]+)px\\)/)?.[1] || '0')), 'y': parseInt(message.style.top) - (min.y + parseInt(container.style.transform.match(/translate\\(([-\\d]+)px,\\s*([-\\d]+)px\\)/)?.[2] || '0'))}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
+            // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
@@ -297,8 +298,6 @@
 
           message.style.left = `${min.x + msg.pos[0]}px`;
           message.style.top = `${min.y + msg.pos[1]}px`;
-          // message.style.left = `${parseInt(msg.pos[0]) > 0? min.x + msg.pos[0] : msg.pos[0]}px`;
-          // message.style.top = `${parseInt(msg.pos[1]) > 0? min.y + msg.pos[1] : msg.pos[1]}px`;
           container.appendChild(message);
         })
       }
@@ -307,6 +306,8 @@
         let shiftX = 0;
         let shiftY = 0;
         let isDragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
 
         element.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
       
@@ -333,37 +334,63 @@
           
           const x = event.clientX ?? event.touches?.[0]?.clientX;
           const y = event.clientY ?? event.touches?.[0]?.clientY;
-      
-          if (x !== undefined && y !== undefined) {
-            element.style.left = `${x - shiftX}px`;
-            element.style.top = `${y - shiftY}px`;
-          }
-
-          // features
-          // x
-          if (x - shiftX < 0) {
+          
+          const newLeft = x - shiftX;
+          const newTop = y - shiftY;
+          
+          element.style.left = `${newLeft}px`;
+          element.style.top = `${newTop}px`;
+          
+          // если курсор выходит за левую границу
+          if (newLeft < 0) {
+            const overshootX = -newLeft;
+            offsetX += overshootX;
             element.style.left = "0px";
-            difX = difX > 100 ? difX + 5 : difX + -1 * (x - shiftX);
-            container.style.paddingLeft = `${difX}px`;
-          } else if (difX > 0) {
-            if (difX - (x - shiftX) < 0) { 
-              container.style.paddingLeft = "0px"; 
-              element.style.left = `${x - shiftX - difX}px`; 
-              difX = 0 
-            } else { difX -= Math.min(x - shiftX, 5); container.style.paddingLeft = `${difX}px` }
-          }// else { window.scrollTo(x - shiftX, 0) }
-          // y
-          if (y - shiftY < 0) {
+          }
+          
+          // если выходит за верх
+          if (newTop < 0) {
+            const overshootY = -newTop;
+            offsetY += overshootY;
             element.style.top = "0px";
-            difY = difY > 100 ? difY + 5 : difY + -1 * (y - shiftY);
-            container.style.paddingTop = `${difY}px`;
-          } else if (difY > 0) {
-            if (difY - (y - shiftY) < 0) { 
-              container.style.paddingTop = "0px"; 
-              element.style.top = `${y - shiftY - difY}px`; 
-              difY = 0 
-            } else { difY -= Math.min(y - shiftY, 5); container.style.paddingTop = `${difY}px` }
-          }// else { window.scrollTo(0, y - shiftY) }
+          }
+          
+          // применяем transform
+          container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+
+          // const x = event.clientX ?? event.touches?.[0]?.clientX;
+          // const y = event.clientY ?? event.touches?.[0]?.clientY;
+          
+          // if (x !== undefined && y !== undefined) {
+          //   element.style.left = `${x - shiftX}px`;
+          //   element.style.top = `${y - shiftY}px`;
+          // }
+
+          // // features
+          // // x
+          // if (x - shiftX < 0) {
+          //   element.style.left = "0px";
+          //   difX = difX > 100 ? difX + 5 : difX + -1 * (x - shiftX);
+          //   container.style.paddingLeft = `${difX}px`;
+          // } else if (difX > 0) {
+          //   if (difX - (x - shiftX) < 0) { 
+          //     container.style.paddingLeft = "0px"; 
+          //     element.style.left = `${x - shiftX - difX}px`; 
+          //     difX = 0 
+          //   } else { difX -= Math.min(x - shiftX, 5); container.style.paddingLeft = `${difX}px` }
+          // }
+          // // y
+          // if (y - shiftY < 0) {
+          //   element.style.top = "0px";
+          //   difY = difY > 100 ? difY + 5 : difY + -1 * (y - shiftY);
+          //   container.style.paddingTop = `${difY}px`;
+          // } else if (difY > 0) {
+          //   if (difY - (y - shiftY) < 0) { 
+          //     container.style.paddingTop = "0px"; 
+          //     element.style.top = `${y - shiftY - difY}px`; 
+          //     difY = 0 
+          //   } else { difY -= Math.min(y - shiftY, 5); container.style.paddingTop = `${difY}px` }
+          // }
       
           event.preventDefault();
           event.stopPropagation();
