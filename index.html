@@ -295,9 +295,10 @@
           date.textContent = msg.date;
           message.appendChild(date)
 
-          message.style.left = `${parseInt(msg.pos[0]) > 0? min.x + msg.pos[0] : msg.pos[0]}px`;
-          message.style.top = `${parseInt(msg.pos[1]) > 0? min.y + msg.pos[1] : msg.pos[1]}px`;
-          console.log(parseInt(msg.pos[0]), parseInt(msg.pos[1]), msg.id)
+          message.style.left = `${min.x + msg.pos[0]}px`;
+          message.style.top = `${min.y + msg.pos[1]}px`;
+          // message.style.left = `${parseInt(msg.pos[0]) > 0? min.x + msg.pos[0] : msg.pos[0]}px`;
+          // message.style.top = `${parseInt(msg.pos[1]) > 0? min.y + msg.pos[1] : msg.pos[1]}px`;
           container.appendChild(message);
         })
       }
