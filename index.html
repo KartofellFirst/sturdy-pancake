@@ -271,8 +271,8 @@
           if (maxY < msg.pos[1]) maxY = msg.pos[1];
         } catch { console.log(`message has not positioned. id: ${msg.id}`) }
 
-        container.style.width = `${Math.abs(minX) + maxX + 800}px`;
-        container.style.height = `${Math.abs(minY) + maxY + 900}px`;
+        container.style.width = `${Math.abs(minX) + maxX + 300 + correct}px`;
+        container.style.height = `${Math.abs(minY) + maxY + 400 + correct}px`;
         document.querySelector('.frame').style.width = `${Math.abs(minX) + maxX + 300}px`;
         document.querySelector('.frame').style.height = `${Math.abs(minY) + maxY + 400}px`;
         document.querySelector('main').style.left = `${Math.abs(minX) + correct}px`;
