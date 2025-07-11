@@ -308,8 +308,11 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            saveBtn.addEventListener('click', (event) => {
-              // event.stopPropagation();
+            saveBtn.addEventListener('click', (event) => place(event));
+            saveBtn.addEventListener('pointerdown', (event) => place(event));
+            
+            function place(event) {
+              event.stopPropagation();
               if (message.classList.contains('red-outline')) { alert('Overlap is forbidden, check the rules!'); return; }
               const rect = message.getBoundingClientRect();
               const scrollTop = window.pageYOffset;
@@ -318,13 +321,21 @@
               const absoluteLeft = rect.left + scrollLeft;
             
               Post('/move', {'id': msg.id, 'x': parseInt(absoluteLeft) + minX - 500, 'y': parseInt(absoluteTop) + minY - 500}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`)});
-            });
+            }
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
             deleteBtn.title = 'Удалить';
             deleteBtn.textContent = '🗑';
-            deleteBtn.addEventListener('click', (event) => { Post('/delete', {'id': msg.id}).then(data => window.location.href = '/').catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`)})});
+            deleteBtn.addEventListener('click', (event) => Delete(event));
+            deleteBtn.addEventListener('pointerdown', (event) => Delete(event));
+
+            function Delete(event) {
+              event.stopPropagation();
+              Post('/delete', {'id': msg.id})
+                .then(data => window.location.href = '/')
+                .catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`)})
+            }
           
             controls.appendChild(saveBtn);
             controls.appendChild(deleteBtn);
