@@ -293,7 +293,7 @@
               const absoluteTop = rect.top + scrollTop;
               const absoluteLeft = rect.left + scrollLeft;
             
-              Post('/move', {'id': msg.id, 'x': parseInt(absoluteLeft) + minX, 'y': parseInt(absoluteTop) + minY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`)});
+              Post('/move', {'id': msg.id, 'x': parseInt(absoluteLeft) + minX - 500, 'y': parseInt(absoluteTop) + minY - 500}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`)});
             });
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': posX, 'y': posY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
             // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
