@@ -236,7 +236,7 @@
         </div>
       </main2>
     </main>
-    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { if (new URLSearchParams(location.search).has('r')) document.querySelector('main').classList.add('hidden');document.querySelector('main').style.height = "fit-content";document.querySelector('main').style.width = "300px";document.querySelector('main').style.top = "9vh";document.querySelector('main').style.left = "calc(50vw - 150px)"; }</script>
+    <!-- url check --><script>const c = new URLSearchParams(location.search).has('id') ? 2 : 1; document.querySelector(`main${c}`).classList.remove('hidden');if (c == 2) { if (new URLSearchParams(location.search).has('r')) document.querySelector('main').classList.add('hidden');document.querySelector('main').style.height = "fit-content";document.querySelector('main').style.width = "300px";document.querySelector('main').style.top = "9vh";document.querySelector('main').style.left = "calc(50vw - 150px)"; document.querySelector('.container').style.left = "0px"; document.querySelector('.container').style.top = "0px";}</script>
     <script>
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
       const container = document.getElementById('container')
@@ -259,8 +259,10 @@
         container.style.height = `${Math.abs(minY) + maxY + 900}px`;
         document.querySelector('.frame').style.width = `${Math.abs(minX) + maxX + 300}px`;
         document.querySelector('.frame').style.height = `${Math.abs(minY) + maxY + 400}px`;
-        document.querySelector('main').style.left = `${Math.abs(minX) + 500}px`;
-        document.querySelector('main').style.top = `${Math.abs(minY) + 500}px`;
+        let correct;
+        c == 2? correct = 500 : correct = 0;
+        document.querySelector('main').style.left = `${Math.abs(minX) + correct}px`;
+        document.querySelector('main').style.top = `${Math.abs(minY) + correct}px`;
         document.querySelector('main').scrollIntoView({'block': 'center', 'inline': 'center'});
       }); spawnMessages(data, {'x': Math.abs(minX), 'y': Math.abs(minY)});}).catch(error => console.error(error))
 
