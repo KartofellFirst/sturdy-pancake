@@ -238,6 +238,7 @@
     </main>
     <script>
       let correct = 0;
+      const container = document.getElementById('container')
       const c = new URLSearchParams(location.search).has('id') ? 2 : 1; 
       document.querySelector(`main${c}`).classList.remove('hidden');
       if (c == 2) { 
@@ -247,12 +248,14 @@
         document.querySelector('main').style.width = "300px";
         document.querySelector('main').style.top = "9vh";
         document.querySelector('main').style.left = "calc(50vw - 150px)"; 
-        document.querySelector('.container').style.left = "500px"; 
-        document.querySelector('.container').style.top = "500px";
+        container.style.left = "500px"; 
+        container.style.top = "500px";
+      } else {
+        document.querySelector('.frame').style.minWidth = "100vw";
+        document.querySelector('.frame').style.minHeight = "100vh";
       }
       
       const main = document.querySelector('main1').classList.contains('hidden')? document.querySelector('main2') : document.querySelector('main1');
-      const container = document.getElementById('container')
       let minX = 0; 
       let minY = 0; 
       let maxX = 0; 
