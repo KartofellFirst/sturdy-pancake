@@ -137,11 +137,12 @@
       
       .msg-text {
         display: block;
-        white-space: nowrap;
+        white-space: pre-wrap;
         overflow: hidden;
         text-overflow: ellipsis;
         margin-bottom: 8px;
         -webkit-line-clamp: 7;
+        max-height: 145px;
       }
 
       .msg-date {
@@ -307,13 +308,6 @@
             saveBtn.className = 'icon-btn save';
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
-            // save 
-            // const transformMatch = container.style.transform.match(/translate\(([-\d]+)px,\s*([-\d]+)px\)/) || [0, '0', '0'];
-            // const match = container.style.transform.match(/translate\(([-\d]+)px(?:,\s*([-\d]+)px)?\)/) || [0, '0', '0'];
-            // const shiftX = parseInt(match[1] ?? '0');
-            // const shiftY = parseInt(match[2] ?? '0');
-            // const posX = parseInt(message.style.left || '0') - (min.x + shiftX);
-            // const posY = parseInt(message.style.top || '0') - (min.y + shiftY);
             saveBtn.addEventListener('click', () => {
               const rect = message.getBoundingClientRect();
               const scrollTop = window.pageYOffset;
@@ -323,13 +317,12 @@
             
               Post('/move', {'id': msg.id, 'x': parseInt(absoluteLeft) + minX - 500, 'y': parseInt(absoluteTop) + minY - 500}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`)});
             });
-            // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': posX, 'y': posY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
-            // saveBtn.addEventListener('click', () => { Post('/move', {'id': msg.id, 'x': parseInt(message.style.left) - min.x - difX, 'y': parseInt(message.style.top) - min.y - difY}).then(data => window.location.href="/?r&id").catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`) })  })
           
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'icon-btn delete';
             deleteBtn.title = 'Удалить';
             deleteBtn.textContent = '🗑';
+            deleteBtn.addEventListener('click', () => { Post('/delete', {'id': msg.id}).then(data => window.location.href = '/').catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`)})
           
             controls.appendChild(saveBtn);
             controls.appendChild(deleteBtn);
