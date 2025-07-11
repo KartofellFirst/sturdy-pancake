@@ -322,7 +322,7 @@
             deleteBtn.className = 'icon-btn delete';
             deleteBtn.title = 'Удалить';
             deleteBtn.textContent = '🗑';
-            deleteBtn.addEventListener('click', () => { Post('/delete', {'id': msg.id}).then(data => window.location.href = '/').catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`)})
+            deleteBtn.addEventListener('click', () => { Post('/delete', {'id': msg.id}).then(data => window.location.href = '/').catch(error => { alert(`[ERROR] \n server responsed with error, logs: \n\n${error}`)})});
           
             controls.appendChild(saveBtn);
             controls.appendChild(deleteBtn);
