@@ -309,6 +309,7 @@
             saveBtn.title = 'Сохранить';
             saveBtn.textContent = '✔️';
             saveBtn.addEventListener('click', () => {
+              if (message.classList.contains('red-outline')) { alert('Overlap is forbidden, check the rules!'); return; }
               const rect = message.getBoundingClientRect();
               const scrollTop = window.pageYOffset;
               const scrollLeft = window.pageXOffset;           
@@ -388,8 +389,6 @@
       
           event.preventDefault();
           event.stopPropagation();
-          // document.body.style.touchAction = "none";
-          // element.style.touchAction = "none";
         };
       
         const onPointerMove = (event) => {
@@ -410,91 +409,8 @@
           element.style.left = `${dX < 0? 0 : dX}px`;
           element.style.top = `${dY < 0? 0 : dY}px`;
 
-          // const x = event.clientX ?? event.touches?.[0]?.clientX;
-          // const y = event.clientY ?? event.touches?.[0]?.clientY;
-          
-          // const containerWidth = container.offsetWidth;
-          // const containerHeight = container.offsetHeight;
-          // const elementWidth = element.offsetWidth;
-          // const elementHeight = element.offsetHeight;
-          
-          // const rightEdge = containerWidth - elementWidth;
-          // const bottomEdge = containerHeight - elementHeight;
-          
-          // let offsetX = 0; // сдвиг сцены
-          // let offsetY = 0;
-          
-          // const newLeft = x - shiftX;
-          // const newTop = y - shiftY;
-          
-          // let elementLeft = newLeft;
-          // let elementTop = newTop;
-          
-          // // === Горизонтальное движение ===
-          // if (newLeft < 0) {
-          //   const overshoot = -newLeft;
-          //   offsetX += overshoot;
-          //   elementLeft = 0;
-          // } else if (newLeft > rightEdge) {
-          //   const overshoot = newLeft - rightEdge;
-          //   offsetX -= overshoot;
-          //   elementLeft = rightEdge;
-          // }
-          
-          // // === Вертикальное движение ===
-          // if (newTop < 0) {
-          //   const overshoot = -newTop;
-          //   offsetY += overshoot;
-          //   elementTop = 0;
-          // } else if (newTop > bottomEdge) {
-          //   const overshoot = newTop - bottomEdge;
-          //   offsetY -= overshoot;
-          //   elementTop = bottomEdge;
-          // }
-          
-          // // применяем координаты
-          // element.style.left = `${elementLeft}px`;
-          // element.style.top = `${elementTop}px`;
-          // container.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-          
-          // const x = event.clientX ?? event.touches?.[0]?.clientX;
-          // const y = event.clientY ?? event.touches?.[0]?.clientY;
-          
-          // if (x !== undefined && y !== undefined) {
-          //   element.style.left = `${x - shiftX}px`;
-          //   element.style.top = `${y - shiftY}px`;
-          // }
-
-          // // features
-          // // x
-          // if (x - shiftX < 0) {
-          //   element.style.left = "0px";
-          //   difX = difX > 100 ? difX + 5 : difX + -1 * (x - shiftX);
-          //   container.style.paddingLeft = `${difX}px`;
-          // } else if (difX > 0) {
-          //   if (difX - (x - shiftX) < 0) { 
-          //     container.style.paddingLeft = "0px"; 
-          //     element.style.left = `${x - shiftX - difX}px`; 
-          //     difX = 0 
-          //   } else { difX -= Math.min(x - shiftX, 5); container.style.paddingLeft = `${difX}px` }
-          // }
-          // // y
-          // if (y - shiftY < 0) {
-          //   element.style.top = "0px";
-          //   difY = difY > 100 ? difY + 5 : difY + -1 * (y - shiftY);
-          //   container.style.paddingTop = `${difY}px`;
-          // } else if (difY > 0) {
-          //   if (difY - (y - shiftY) < 0) { 
-          //     container.style.paddingTop = "0px"; 
-          //     element.style.top = `${y - shiftY - difY}px`; 
-          //     difY = 0 
-          //   } else { difY -= Math.min(y - shiftY, 5); container.style.paddingTop = `${difY}px` }
-          // }
-      
           event.preventDefault();
           event.stopPropagation();
-          // document.body.style.touchAction = "none";
-          // element.style.touchAction = "none";
         };
       
         const onPointerUp = () => {
@@ -527,18 +443,6 @@
             }
           }, 150); // задержка в мс
         });
-        // document.addEventListener('scroll', () => {
-        //   element.classList.add('dragging');
-        // })
-        
-        // document.addEventListener('scrollend', () => {
-        //   element.classList.remove('dragging');
-        //   if (isOverlapped(element)) {
-        //     element.classList.add('red-outline');
-        //   } else {
-        //     element.classList.remove('red-outline');
-        //   }
-        // })
       }
 
       
